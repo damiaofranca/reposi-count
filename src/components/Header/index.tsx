@@ -65,11 +65,12 @@ export const Header: React.FC<HeaderProps> = ({ sideExpanded, onExpanded }) => {
 			<LeftSide>
 				<Dropdown backdrop="blur">
 					<DropdownTrigger>
-						<Button variant="light">
+						<Button variant="light" className="py-2">
 							<NameUser>
 								{getFirstNameFromEmail(userLogged?.email || "")}
 							</NameUser>
 							<Avatar
+								size="sm"
 								{...(userLogged?.providerData[0].photoURL
 									? { src: userLogged?.providerData[0].photoURL }
 									: { name: userLogged?.providerData[0].email || "" })}

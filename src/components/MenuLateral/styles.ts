@@ -37,12 +37,13 @@ export const LinkContainer = styled.div`
 
 export const LinkAction = styled(NavLink)`
 	width: 100%;
-	height: 60px;
+	height: 48px;
 	border: none;
 	display: flex;
 	padding-left: 29px;
 	align-items: center;
 	background-color: transparent;
+	
 
 	color: #4e61c9;
 	font-size: 14px;
@@ -54,6 +55,10 @@ export const LinkAction = styled(NavLink)`
 	&.active {
 		font-weight: 600;
 		box-shadow: inset -3px 0px #4e61c9;
+	}
+
+	&:first-child{
+		margin-top: 12px;
 	}
 
 	@media screen and (max-width: 920px) {

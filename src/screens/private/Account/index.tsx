@@ -2,17 +2,15 @@ import React from "react";
 import { Button } from "@nextui-org/react";
 import { Outlet, useNavigate } from "react-router-dom";
 
-import { ArrowLeftIcon, TrashIcon } from "../../../components";
+import { ArrowLeftIcon, TrashIcon, Title } from "../../../components";
 import {
-	Title,
-	Container,
-	ContainerHeader,
 	Wrapper,
-	ListSettings,
 	Content,
+	Container,
+	ListSettings,
+	ContainerHeader,
 } from "./styles";
 import { ListBox } from "../../../components/ListBox";
-import { ThemeProvider } from "../../../providers/Theme";
 
 interface AccountProps {}
 

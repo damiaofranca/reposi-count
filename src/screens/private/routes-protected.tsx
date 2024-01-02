@@ -1,10 +1,11 @@
 import { RouteObject } from "react-router-dom";
 import { ProtectedPage } from "../../components";
 
-import { InitialPage } from "./InitialPage";
-import { PartnersStores } from "./PartnersStores";
+import { Brands } from "./Brands";
 import { Account } from "./Account";
+import { InitialPage } from "./InitialPage";
 import { DeleteAccount } from "./DeleteAccount";
+import { PartnersStores } from "./PartnersStores";
 
 export const ROUTES_PAGES: RouteObject[] = [
 	{
@@ -14,6 +15,10 @@ export const ROUTES_PAGES: RouteObject[] = [
 	{
 		path: "/partners",
 		element: <ProtectedPage element={PartnersStores} validatePage={true} />,
+	},
+	{
+		path: "/brands",
+		element: <ProtectedPage element={Brands} validatePage={true} />,
 	},
 	{
 		path: "/account",

@@ -126,7 +126,6 @@ const LoginPage: React.FC = () => {
 						</ContainerSubmit>
 						<ContainerSubmit>
 							<Button
-								type="submit"
 								color="primary"
 								variant="bordered"
 								className="w-full"

@@ -2,6 +2,7 @@ import React from "react";
 
 import MapIcon from "../../assets/icons/map.svg";
 import HomeIcon from "../../assets/icons/home.svg";
+import MarketIcon from "../../assets/icons/market.svg";
 
 import {
 	LinkIcon,
@@ -51,6 +52,11 @@ export const MenuLateral: React.FC<IMenuLateral> = ({ expanded }) => {
 			path: "/partners",
 			iconPath: MapIcon,
 			name: "Lojas parceiras",
+		},
+		{
+			path: "/brands",
+			iconPath: MarketIcon,
+			name: "Marcas",
 		},
 	];
 

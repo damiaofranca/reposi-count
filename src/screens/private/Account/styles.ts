@@ -35,14 +35,3 @@ export const ListSettings = styled.div`
 	/* background-color: red;/ */
 `;
 
-export const Title = styled.h1`
-	font-size: 24px;
-	font-weight: 600;
-	line-height: 36px;
-`;
-
-export const RegisterIcon = styled.img`
-	width: 20px;
-	height: 20px;
-	margin-right: 8px;
-`;
