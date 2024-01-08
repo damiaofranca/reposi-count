@@ -5,24 +5,19 @@ import { Brands } from "./Brands";
 import { Account } from "./Account";
 import { InitialPage } from "./InitialPage";
 import { DeleteAccount } from "./DeleteAccount";
-import { PartnersStores } from "./PartnersStores";
 
 export const ROUTES_PAGES: RouteObject[] = [
 	{
 		path: "/",
-		element: <ProtectedPage element={InitialPage} validatePage={true} />,
-	},
-	{
-		path: "/partners",
-		element: <ProtectedPage element={PartnersStores} validatePage={true} />,
+		element: <ProtectedPage element={InitialPage} validadePage={true} />,
 	},
 	{
 		path: "/brands",
-		element: <ProtectedPage element={Brands} validatePage={true} />,
+		element: <ProtectedPage element={Brands} validadePage={true} />,
 	},
 	{
 		path: "/account",
-		element: <ProtectedPage element={Account} validatePage={true} />,
+		element: <ProtectedPage element={Account} validadePage={true} />,
 		children: [
 			{
 				path: "delete-account",

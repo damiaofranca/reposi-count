@@ -1,7 +1,7 @@
 import React from "react";
 
 import {
-	Icon,
+	IconContainer,
 	Title,
 	Value,
 	SubTitle,
@@ -19,20 +19,20 @@ import { StyleSheetManager } from "styled-components";
 //icons
 
 interface ICardDashboard {
-	icon: string;
 	title: string;
 	value: string;
 	subtitle: string;
+	icon: JSX.Element;
 	valueMetric: number;
 	metric: "growth" | "middle" | "down";
 }
 
-const CardDashboard: React.FC<ICardDashboard> = (props) => {
+export const CardDashboard: React.FC<ICardDashboard> = (props) => {
 	return (
 		<Container className="bg-content3">
 			<ContainerInfoFlex>
 				<ContainerInfoColumn>
-					<Icon src={props.icon} alt={props.title} />
+					<IconContainer title={props.title}>{props.icon}</IconContainer>
 					<Title className="text-content2">{props.title}</Title>
 					<StyleSheetManager shouldForwardProp={(prop) => prop !== "metric"}>
 						<SubTitle metric={props.metric} className="text-content2">
@@ -57,5 +57,3 @@ const CardDashboard: React.FC<ICardDashboard> = (props) => {
 		</Container>
 	);
 };
-
-export default CardDashboard;

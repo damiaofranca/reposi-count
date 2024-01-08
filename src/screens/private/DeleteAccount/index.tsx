@@ -6,8 +6,8 @@ import {
 	Subtitle,
 	Title,
 } from "./styles";
+import { useAuth } from "../../../hooks";
 import { Button, Input } from "@nextui-org/react";
-import { useUserAuth } from "../../../hooks";
 import { useNavigate } from "react-router-dom";
 
 interface IDeleteAccount {}
@@ -16,12 +16,12 @@ export const DeleteAccount: FC<IDeleteAccount> = () => {
 	const navigate = useNavigate();
 	const textVerify = "Desejo excluir minha conta";
 	const [name, setName] = useState<string>("");
-	const { deleteAccount } = useUserAuth();
+	const { onDeleteAccount } = useAuth();
 
 	const onRemove = async () => {
 		if (name === textVerify) {
 			try {
-				await deleteAccount();
+				await onDeleteAccount();
 				navigate("/login");
 			} catch (error) {}
 		}

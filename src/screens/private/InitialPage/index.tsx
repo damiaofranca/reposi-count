@@ -1,34 +1,17 @@
-import { useGetStores } from "../../../hooks";
-import CardDashboard from "../../../components/CardDashboard";
+import { useTheme } from "../../../hooks";
+import { RankingCities, Graphic, CardDashboard } from "../../../components";
 
-//icons
-import Graphic from "../../../components/Graphic";
-import { RankingCities } from "../../../components";
-import ChipIcon from "../../../assets/icons/chip.svg";
-import BuildIcon from "../../../assets/icons/build.svg";
-import PeopleIcon from "../../../assets/icons/people.svg";
-import MapDashboardIcon from "../../../assets/icons/map-dashboard.svg";
-//icons
+import ChipIcon from "../../../assets/icons/Chip";
+import BuildIcon from "../../../assets/icons/Build";
+import PeopleIcon from "../../../assets/icons/People";
+import MapDashboardIcon from "../../../assets/icons/MapDashboardIcon";
 
 import { Container, WrapperCards, WrapperGraphics } from "./styles";
 
 interface InitialPageProps {}
 
 export const InitialPage: React.FC<InitialPageProps> = () => {
-	const { stores } = useGetStores();
-
-	const getTotalCities = () => {
-		return stores.filter((value, index, self) => {
-			return (
-				self.findIndex(
-					(v) =>
-						v.city.toLowerCase().normalize() ===
-						value.city.toLowerCase().normalize(),
-				) === index
-			);
-		}).length;
-	};
-
+	const { theme } = useTheme();
 	return (
 		<Container>
 			<WrapperCards>
@@ -36,7 +19,7 @@ export const InitialPage: React.FC<InitialPageProps> = () => {
 					value="+45mil"
 					metric="growth"
 					valueMetric={10}
-					icon={PeopleIcon}
+					icon={<PeopleIcon theme={theme} />}
 					subtitle="Crescimento"
 					title="Total de clientes"
 				/>
@@ -44,14 +27,14 @@ export const InitialPage: React.FC<InitialPageProps> = () => {
 					metric="middle"
 					valueMetric={10}
 					subtitle="Constância"
-					icon={MapDashboardIcon}
+					icon={<MapDashboardIcon theme={theme} />}
 					title="Total de cidades"
-					value={`${getTotalCities() || "0"}`}
+					value={`1000`}
 				/>
 				<CardDashboard
 					value="+45mil"
 					metric="growth"
-					icon={ChipIcon}
+					icon={<ChipIcon theme={theme} />}
 					valueMetric={10}
 					subtitle="Crescimento"
 					title="Total de assinaturas"
@@ -59,10 +42,10 @@ export const InitialPage: React.FC<InitialPageProps> = () => {
 				<CardDashboard
 					metric="down"
 					valueMetric={28}
-					icon={BuildIcon}
+					icon={<BuildIcon theme={theme} />}
 					subtitle="Declinação"
 					title="Total de lojas"
-					value={`${stores.length || "0"}`}
+					value={`11000`}
 				/>
 			</WrapperCards>
 			<WrapperGraphics>

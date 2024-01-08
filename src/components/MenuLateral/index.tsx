@@ -1,17 +1,16 @@
 import React from "react";
 
-import MapIcon from "../../assets/icons/map.svg";
-import HomeIcon from "../../assets/icons/home.svg";
-import MarketIcon from "../../assets/icons/market.svg";
-
 import {
-	LinkIcon,
 	MenuTitle,
 	LinkAction,
 	LinkContainer,
 	ContainerExpanded,
+	ContainerIcon,
 } from "./styles";
 import { StyleSheetManager } from "styled-components";
+import HomeIcon from "../../assets/icons/Home";
+import MarketIcon from "../../assets/icons/Market";
+import { useTheme } from "../../hooks";
 
 interface IMenuLateral {
 	expanded?: boolean;
@@ -20,42 +19,44 @@ interface IMenuLateral {
 interface IRouterChildren {
 	name: string;
 	path: string;
-	iconPath: string;
+	icon: JSX.Element;
 }
 
 interface IRouterLinkChildren extends IRouterChildren {
+	theme: "light" | "dark";
 	expanded?: boolean;
 }
 
 const LinkChildren: React.FC<IRouterLinkChildren> = ({
 	path,
 	name,
-	iconPath,
+	theme,
 	expanded,
+	icon: Icon,
 }) => {
 	return (
-		<LinkAction to={path} className={"hover:bg-content3"}>
-			<LinkIcon src={iconPath} alt={name} />
-			{expanded && <span>{name}</span>}
+		<LinkAction to={path} className={"hover:bg-content3"} theme={theme}>
+			<ContainerIcon>{Icon}</ContainerIcon>
+			{expanded && (
+				<span style={{ color: theme === "light" ? "#739072" : "#ffff" }}>
+					{name}
+				</span>
+			)}
 		</LinkAction>
 	);
 };
 
 export const MenuLateral: React.FC<IMenuLateral> = ({ expanded }) => {
+	const { theme } = useTheme();
 	const ROUTES_CHILDREN: IRouterChildren[] = [
 		{
 			path: "/",
-			iconPath: HomeIcon,
+			icon: <HomeIcon theme={theme} />,
 			name: "Página Inicial",
 		},
 		{
-			path: "/partners",
-			iconPath: MapIcon,
-			name: "Lojas parceiras",
-		},
-		{
 			path: "/brands",
-			iconPath: MarketIcon,
+			icon: <MarketIcon theme={theme} />,
 			name: "Marcas",
 		},
 	];
@@ -66,16 +67,17 @@ export const MenuLateral: React.FC<IMenuLateral> = ({ expanded }) => {
 				className="bg-background"
 				expanded={expanded ? true : false}
 			>
-				<MenuTitle className="title-menu">PRINCIPAL</MenuTitle>
+				<MenuTitle className="title-menu invert">PRINCIPAL</MenuTitle>
 				{ROUTES_CHILDREN && (
 					<LinkContainer>
 						{ROUTES_CHILDREN.map((urlPage) => (
 							<LinkChildren
+								theme={theme}
 								key={urlPage.name}
 								name={urlPage.name}
 								path={urlPage.path}
 								expanded={expanded}
-								iconPath={urlPage.iconPath}
+								icon={urlPage.icon}
 							/>
 						))}
 					</LinkContainer>

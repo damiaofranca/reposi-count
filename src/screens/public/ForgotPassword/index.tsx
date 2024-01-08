@@ -5,7 +5,6 @@ import { Button, Spinner } from "@nextui-org/react";
 
 import LoginUserSchema from "./schema";
 import logo from "../../../assets/icons/logo.svg";
-import { useUserAuth } from "../../../hooks/useUserAuth";
 import { InputNew } from "../../../components";
 
 import {
@@ -21,7 +20,6 @@ import {
 
 const ForgotPassword: React.FC = () => {
 	const navigate = useNavigate();
-	const { sendEmailUpdatePassword } = useUserAuth();
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
 	const {
@@ -40,8 +38,7 @@ const ForgotPassword: React.FC = () => {
 		},
 		onSubmit: async (values) => {
 			setIsLoading(true);
-
-			await sendEmailUpdatePassword(values.email);
+			// make request...
 			setIsLoading(false);
 
 			navigate("/");

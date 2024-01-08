@@ -16,7 +16,6 @@ export const ContainerExpanded = styled.aside<{ expanded: boolean }>`
 `;
 
 export const MenuTitle = styled.h5`
-	color: #4e61c9;
 	font-size: 12px;
 	cursor: default;
 	font-weight: 600;
@@ -35,7 +34,7 @@ export const LinkContainer = styled.div`
 	flex-direction: column;
 `;
 
-export const LinkAction = styled(NavLink)`
+export const LinkAction = styled(NavLink)<{theme: "light" | "dark"}>`
 	width: 100%;
 	height: 48px;
 	border: none;
@@ -43,18 +42,25 @@ export const LinkAction = styled(NavLink)`
 	padding-left: 29px;
 	align-items: center;
 	background-color: transparent;
-	
 
-	color: #4e61c9;
 	font-size: 14px;
 	font-weight: 400;
 	line-height: 21px;
-	font-family: "Open Sans";
 	text-decoration: none;
+	font-family: "Open Sans";
+
+	& span{
+	opacity: 0.6;
+
+	}
 
 	&.active {
+		box-shadow: inset -3px 0px ${({theme})=> theme === "light" ? "#739072" : "#fff"};
+
+		& span{
+		opacity: 1;
 		font-weight: 600;
-		box-shadow: inset -3px 0px #4e61c9;
+		}
 	}
 
 	&:first-child{
@@ -68,8 +74,6 @@ export const LinkAction = styled(NavLink)`
 	}
 `;
 
-export const LinkIcon = styled.img`
-	width: 20px;
-	height: 20px;
-	margin: 0 15px 0 5px;
+export const ContainerIcon = styled.div`
+	margin: 0 10px 0px 0px;
 `;

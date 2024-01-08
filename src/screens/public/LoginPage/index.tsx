@@ -6,7 +6,7 @@ import { Button, Spinner } from "@nextui-org/react";
 import LoginUserSchema from "./schema";
 import { useTheme } from "../../../hooks";
 import LogoIcon from "../../../assets/icons/logo.svg";
-import { useUserAuth } from "../../../hooks/useUserAuth";
+import { useAuth } from "../../../hooks/useAuth";
 import { GoogleIcon, InputNew } from "../../../components";
 import LogoWhiteIcon from "../../../assets/icons/logo-white.svg";
 
@@ -29,7 +29,7 @@ import {
 const LoginPage: React.FC = () => {
 	const navigate = useNavigate();
 	const { theme } = useTheme();
-	const { onLogin, onSignInWithGoogle } = useUserAuth();
+	const { onSignIn } = useAuth();
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
 	const {
@@ -55,9 +55,8 @@ const LoginPage: React.FC = () => {
 
 	const _onLogin = async () => {
 		setIsLoading(true);
-		await onLogin({ email: values.email, password: values.password });
+		await onSignIn({ email: values.email, password: values.password });
 		setIsLoading(false);
-
 		navigate("/");
 	};
 
@@ -119,20 +118,9 @@ const LoginPage: React.FC = () => {
 								className="w-full"
 								isDisabled={!isValid}
 								isLoading={isLoading}
-								spinner={<Spinner size="sm" />}
+								spinner={<Spinner size="sm" color="danger" />}
 							>
 								Entrar
-							</Button>
-						</ContainerSubmit>
-						<ContainerSubmit>
-							<Button
-								color="primary"
-								variant="bordered"
-								className="w-full"
-								endContent={<GoogleIcon />}
-								onClick={onSignInWithGoogle}
-							>
-								Continue com
 							</Button>
 						</ContainerSubmit>
 					</Form>

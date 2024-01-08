@@ -1,5 +1,3 @@
-import { useGetStores } from "../../hooks";
-
 import {
 	Title,
 	ListItem,
@@ -13,7 +11,12 @@ import {
 interface RankingCitiesProps {}
 
 export const RankingCities: React.FC<RankingCitiesProps> = () => {
-	const { topEightCities } = useGetStores();
+	const topEightCities = [
+		{
+			name: "São miguel",
+			totalMount: "12,000",
+		},
+	];
 
 	return (
 		<Container className="bg-content3">

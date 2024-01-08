@@ -4,7 +4,7 @@ import ChartClients from "../ChartClients";
 
 import { Container, ContainerChart, Header, Title } from "./styles";
 
-const Graphic: React.FC = () => (
+export const Graphic: React.FC = () => (
 	<Container className="bg-content3">
 		<Header>
 			<Title className="text-content2">Entrada de clientes - Dezembro</Title>
@@ -17,5 +17,3 @@ const Graphic: React.FC = () => (
 		</ContainerChart>
 	</Container>
 );
-
-export default Graphic;

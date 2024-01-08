@@ -52,7 +52,7 @@ export const Container = styled.div`
 	}
 `;
 
-export const Icon = styled.img`
+export const IconContainer = styled.div`
 	width: 28px;
 	height: 28px;
 	margin-bottom: 8px;

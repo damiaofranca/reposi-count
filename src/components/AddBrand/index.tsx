@@ -1,7 +1,6 @@
 import React from "react";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
-import { doc, setDoc } from "firebase/firestore";
 
 import {
 	Modal,
@@ -14,8 +13,6 @@ import {
 } from "@nextui-org/react";
 
 import RegisterBrandSchema from "./schema";
-import { dbFireStore } from "../../config/firebase";
-import { handleFirebaseRequestError } from "../../utils/requestError";
 
 import { useTheme } from "../../hooks";
 import { InputNew } from "../InputNew";
@@ -62,10 +59,6 @@ export const AddBrand: React.FC<IAddBrand> = ({ onClose }) => {
 	const onSubmit = async () => {
 		setIsLoading(true);
 		try {
-			await setDoc(doc(dbFireStore, "stores", values.name), {
-				...values,
-			});
-
 			toast.success("Marca cadastrada com sucesso.", {
 				autoClose: 2000,
 				position: "top-right",
@@ -75,7 +68,6 @@ export const AddBrand: React.FC<IAddBrand> = ({ onClose }) => {
 			resetForm();
 		} catch (error) {
 			setIsLoading(false);
-			handleFirebaseRequestError(error as any);
 			onClose();
 		}
 	};
