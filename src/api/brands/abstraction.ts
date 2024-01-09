@@ -1,7 +1,15 @@
-import { ICreateRequest, IGetAllRequest, IGetAllResponse, IGetOneRequest, IGetOneResponse, IUpdateRequest, IDeleteRequest, IDeleteGuestRequest } from "../../interfacers/event";
+import {
+	ICreateRequest,
+	IGetAllRequest,
+	IGetAllResponse,
+	IGetOneRequest,
+	IGetOneResponse,
+	IUpdateRequest,
+	IDeleteRequest,
+	IDeleteGuestRequest,
+} from "../../interfacers/brand";
 
-
-export abstract class EventAbstraction {
+export abstract class BrandAbstraction {
 	public abstract create(payload: ICreateRequest): Promise<void>;
 
 	public abstract getAll(payload: IGetAllRequest): Promise<IGetAllResponse>;

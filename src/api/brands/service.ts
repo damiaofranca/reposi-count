@@ -1,9 +1,17 @@
+import {
+	ICreateRequest,
+	IDeleteGuestRequest,
+	IDeleteRequest,
+	IGetAllRequest,
+	IGetAllResponse,
+	IGetOneRequest,
+	IGetOneResponse,
+	IUpdateRequest,
+} from "../../interfacers/brand";
+import { BrandAbstraction } from "./abstraction";
 
-import { ICreateRequest, IDeleteGuestRequest, IDeleteRequest, IGetAllRequest, IGetAllResponse, IGetOneRequest, IGetOneResponse, IUpdateRequest } from "../../interfacers/event";
-import { EventAbstraction } from "./abstraction";
-
-export class EventService implements EventAbstraction {
-	constructor(private repo: EventAbstraction) {}
+export class BrandService implements BrandAbstraction {
+	constructor(private repo: BrandAbstraction) {}
 
 	public create(payload: ICreateRequest): Promise<void> {
 		return this.repo.create(payload);

@@ -25,7 +25,7 @@ export const ListBox: React.FC<ListBoxProps> = ({ list, ariaLabelBox }) => {
 	const navigate = useNavigate();
 
 	const iconClasses =
-		"text-xl text-default-500 pointer-events-none flex-shrink-0";
+		"text-xl text-default-500 pointer-brands-none flex-shrink-0";
 
 	const onNavigate = (url: string) => {
 		navigate(url);

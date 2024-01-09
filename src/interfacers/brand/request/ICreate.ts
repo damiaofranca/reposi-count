@@ -1,8 +1,8 @@
-import { IEvent } from "./../index";
+import { IBrand } from "./../index";
 
 export interface ICreateRequest
 	extends Omit<
-		IEvent,
+		IBrand,
 		| "id"
 		| "user"
 		| "guests"

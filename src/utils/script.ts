@@ -1,6 +1,5 @@
 import CryptoJS from "crypto-js";
-import {jwtDecode} from "jwt-decode";
-
+import { jwtDecode } from "jwt-decode";
 
 const encryptToken = async (value: string) => {
 	try {
@@ -30,7 +29,9 @@ const encryptValue = (value: string) => {
 };
 
 const decodeToken = () => {
-	const token_local = localStorage.getItem(String(process.env.REACT_APP_LOCAL_TOKEN));
+	const token_local = localStorage.getItem(
+		String(process.env.REACT_APP_LOCAL_TOKEN),
+	);
 
 	if (typeof token_local === "string") {
 		const bytes = CryptoJS.AES.decrypt(
@@ -44,15 +45,14 @@ const decodeToken = () => {
 
 const decodeTokenAsync = () => {
 	return new Promise<string>((resolve) => {
-		const token_local = localStorage.getItem(String(process.env.REACT_APP_LOCAL_TOKEN));
-		console.log(String(process.env.REACT_APP_ENCRYPT_TOKEN))
-		console.log(token_local)
+		const token_local = localStorage.getItem(
+			String(process.env.REACT_APP_LOCAL_TOKEN),
+		);
 		if (typeof token_local === "string" && typeof token_local === "string") {
 			const bytes = CryptoJS.AES.decrypt(
 				token_local,
 				String(process.env.REACT_APP_ENCRYPT_TOKEN),
 			);
-		console.log(bytes)
 
 			resolve(bytes.toString(CryptoJS.enc.Utf8));
 		}

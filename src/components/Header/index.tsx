@@ -34,7 +34,6 @@ export const Header: React.FC<HeaderProps> = ({ sideExpanded, onExpanded }) => {
 	const { onSignOut } = useAuth();
 	const navigate = useNavigate();
 	const { theme, onChangeTheme } = useTheme();
-	console.log(theme);
 
 	const signOut = async () => {
 		await onSignOut();

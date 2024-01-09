@@ -36,23 +36,38 @@ const ChartClients: React.FC<IChartClients> = ({ viewDate, series }) => {
 				backgroundColor: "transparent",
 			},
 			yAxis: {
-				...optionsChart.yAxis,
+				gridLineColor: theme === "light" ? "#739072" : "#ffff",
+				labels: {
+					style: {
+						color: theme === "light" ? "#739072" : "#ffff",
+					},
+				},
 				title: {
 					text: "Total de clientes",
 					style: {
-						color: "#d9ddf1",
+						color: theme === "light" ? "#739072" : "#ffff",
 					},
 				},
 			},
 			series: series,
 			lang: optionsChart.lang,
-			xAxis: optionsChart.xAxis,
+			xAxis: {
+				...optionsChart.xAxis,
+				lineColor: theme === "light" ? "#739072" : "#ffff",
+				labels: {
+					...optionsChart.xAxis.labels,
+					style: {
+						color: theme === "light" ? "#739072" : "#ffff",
+					},
+				},
+			},
 			legend: optionsChart.legend,
 			subtitle: optionsChart.subtitle,
 			responsive: optionsChart.responsive,
 			plotOptions: {
 				series: {
 					...optionsChart.plotOptions.series,
+					color: theme === "light" ? "#739072" : "#ffff",
 					pointIntervalUnit: viewDate && viewDate === "Day" ? "day" : "month",
 				},
 			},
@@ -60,7 +75,7 @@ const ChartClients: React.FC<IChartClients> = ({ viewDate, series }) => {
 		};
 
 		setOptions(_options);
-	}, [series]);
+	}, [series, viewDate, theme]);
 
 	return (
 		<WatchDimentions>

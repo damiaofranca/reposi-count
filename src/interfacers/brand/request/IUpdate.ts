@@ -1,8 +1,8 @@
-import { IEvent } from "../index";
+import { IBrand } from "../index";
 
 export interface IDataUpdateRequest
 	extends Omit<
-		IEvent,
+		IBrand,
 		"id" | "link_detail" | "coordinate" | "createdAt" | "updateAt"
 	> {
 	coordinate: string;

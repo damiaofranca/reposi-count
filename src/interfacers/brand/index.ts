@@ -11,9 +11,9 @@ import { IDeleteGuestResponse } from "./response/IDeleteGuest";
 import { IUpdateResponse } from "./response/IUpdate";
 import { IDeleteResponse } from "./response/IDelete";
 
-export interface IEvent {
+export interface IBrand {
 	id: string;
-	event: string;
+	brand: string;
 	password: string;
 	link_detail: string;
 	user: { id: string };
