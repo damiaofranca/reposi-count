@@ -1,8 +1,11 @@
 import axios from "axios";
 import { redirect } from "react-router-dom";
 import { decodeTokenAsync, removeToken } from "../utils/script";
+import { QueryClient } from "react-query";
 
 const baseURL = process.env.REACT_APP_API_URL;
+
+export const queryClient = new QueryClient();
 
 const api = axios.create({
 	baseURL,

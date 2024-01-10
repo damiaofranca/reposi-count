@@ -10,11 +10,13 @@ import {
 	IRegisterRequest,
 } from "../../interfacers/auth/ILogin";
 import api from "../../api";
-import { encryptToken, removeToken } from "../../utils/script";
+import { decodeHash, encryptToken, removeToken } from "../../utils/script";
 
 export const AuthContext = createContext({} as IAuthContext);
 
 export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
+	const user = decodeHash();
+
 	const onSignIn = async (values: ILoginRequest) => {
 		try {
 			const { data } = await api.post<ILoginResponse>("/auth/signin", values);
@@ -53,7 +55,18 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
 	return (
 		<AuthContext.Provider
-			value={{ onSignIn, onSignUp, onSignOut, onDeleteAccount }}
+			value={{
+				user: user
+					? {
+							email: user.email,
+							user_type: user.user_type,
+					  }
+					: undefined,
+				onSignIn,
+				onSignUp,
+				onSignOut,
+				onDeleteAccount,
+			}}
 		>
 			{children}
 		</AuthContext.Provider>

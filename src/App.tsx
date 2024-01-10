@@ -1,12 +1,17 @@
-import HandlerPages from "./screens/handlerPages";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+import { QueryClientProvider } from "react-query";
 import { NextUIProvider } from "@nextui-org/react";
+
+import { queryClient } from "./api";
+import HandlerPages from "./screens/handlerPages";
 
 const App = () => {
 	return (
 		<NextUIProvider>
-			<HandlerPages />
+			<QueryClientProvider client={queryClient}>
+				<HandlerPages />
+			</QueryClientProvider>
 			<ToastContainer />
 		</NextUIProvider>
 	);

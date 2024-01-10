@@ -13,12 +13,8 @@ import { IDeleteResponse } from "./response/IDelete";
 
 export interface IBrand {
 	id: string;
-	brand: string;
-	password: string;
-	link_detail: string;
-	user: { id: string };
-	coordinate: [string, string];
-	guests: { guest: string; entry_date: string }[];
+	name: string;
+	cnpj: string;
 	createdAt: string;
 	updateAt: string;
 }

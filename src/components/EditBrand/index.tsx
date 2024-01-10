@@ -18,30 +18,34 @@ import { useTheme } from "../../hooks";
 import { InputNew } from "../InputNew";
 
 import { Form, FormItem } from "./styles";
-import { useCreateBrand } from "../../api/brands";
+import { IBrand } from "../../interfacers/brand";
+import { useUpdateBrand } from "../../api/brands/hooks/Update";
+import { queryClient } from "../../api";
 
-interface IAddBrand {
+interface IEditBrand {
+	brand: IBrand;
 	onClose: () => void;
 }
 
-export const AddBrand: React.FC<IAddBrand> = ({ onClose }) => {
+export const EditBrand: React.FC<IEditBrand> = ({ brand, onClose }) => {
 	const { theme } = useTheme();
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
-	const { mutateAsync } = useCreateBrand({
+	const { mutateAsync } = useUpdateBrand({
 		onSuccess: () => {
-			toast.success("Marca cadastrada com sucesso.", {
+			toast.success("Marca editada com sucesso.", {
 				autoClose: 2000,
 				position: "top-right",
 			});
 			setIsLoading(false);
 			onClose();
 			resetForm();
+			queryClient.invalidateQueries(`brands`);
 		},
 		onError: (error: any) => {
 			toast.error(
 				error.response.data.statusCode === 401
-					? "Somente administradores podem adicionar marcas."
-					: "Erro ao cadastrar marca.",
+					? "Somente administradores podem atualizar marcas."
+					: "Erro ao atualizar marca.",
 				{
 					autoClose: 3000,
 					position: "top-right",
@@ -70,7 +74,10 @@ export const AddBrand: React.FC<IAddBrand> = ({ onClose }) => {
 		validateForm,
 	} = useFormik({
 		enableReinitialize: true,
-		initialValues: initial_values,
+		initialValues: {
+			name: brand.name,
+			cnpj: brand.cnpj,
+		},
 		onSubmit: () => {
 			onSubmit();
 		},
@@ -84,7 +91,7 @@ export const AddBrand: React.FC<IAddBrand> = ({ onClose }) => {
 	const onSubmit = async () => {
 		setIsLoading(true);
 		try {
-			await mutateAsync({ cnpj: values.cnpj, name: values.name });
+			await mutateAsync({ data: values, id: brand.id });
 		} catch (error) {}
 	};
 
@@ -102,7 +109,7 @@ export const AddBrand: React.FC<IAddBrand> = ({ onClose }) => {
 								theme === "dark" ? "text-[#fff]" : "text-[#4f4f4f]"
 							}`}
 						>
-							Cadastrar marca
+							Atualizar marca
 						</ModalHeader>
 						<ModalBody>
 							<Form onSubmit={handleSubmit}>
@@ -147,7 +154,7 @@ export const AddBrand: React.FC<IAddBrand> = ({ onClose }) => {
 										isLoading={isLoading}
 										spinner={<Spinner size="sm" color="primary" />}
 									>
-										Cadastrar
+										Atualizar
 									</Button>
 								</ModalFooter>
 							</Form>

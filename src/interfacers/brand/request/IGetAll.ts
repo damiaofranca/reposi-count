@@ -1,7 +1,7 @@
 export interface IGetAllRequest {
-	filters?: {
-		name: string;
-		page: string;
-		limit: string;
+	filters: {
+		name?: string;
+		page?: number;
+		limit?: number;
 	};
 }

@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import { Button } from "@nextui-org/react";
+import styled from "styled-components";
 
 export const Container = styled.div`
 	width: 100%;
@@ -15,4 +16,10 @@ export const ContainerHeader = styled.div`
 	align-items: center;
 	margin-bottom: 32px;
 	justify-content: space-between;
+`;
+
+export const AddBrandBtn = styled(Button)`
+	height: 48px;
+	min-width: 180px;
+	margin-left: 18px;
 `;

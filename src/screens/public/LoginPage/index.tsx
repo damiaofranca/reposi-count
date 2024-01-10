@@ -7,7 +7,7 @@ import LoginUserSchema from "./schema";
 import { useTheme } from "../../../hooks";
 import LogoIcon from "../../../assets/icons/logo.svg";
 import { useAuth } from "../../../hooks/useAuth";
-import { GoogleIcon, InputNew } from "../../../components";
+import { InputNew } from "../../../components";
 import LogoWhiteIcon from "../../../assets/icons/logo-white.svg";
 
 import {
