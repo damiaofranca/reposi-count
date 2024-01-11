@@ -6,9 +6,9 @@ import {
 	IGetOneResponse,
 	IUpdateRequest,
 	IDeleteRequest,
-} from "../../interfacers/brand";
+} from "../../interfacers/storage";
 
-export abstract class BrandAbstraction {
+export abstract class StorageAbstraction {
 	public abstract create(payload: ICreateRequest): Promise<void>;
 
 	public abstract getAll(payload: IGetAllRequest): Promise<IGetAllResponse>;

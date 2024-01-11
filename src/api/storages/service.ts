@@ -2,15 +2,15 @@ import {
 	ICreateRequest,
 	IDeleteRequest,
 	IGetAllRequest,
-	IGetAllResponse,
-	IGetOneRequest,
-	IGetOneResponse,
 	IUpdateRequest,
-} from "../../interfacers/brand";
-import { BrandAbstraction } from "./abstraction";
+	IGetOneRequest,
+	IGetAllResponse,
+	IGetOneResponse,
+} from "../../interfacers/storage";
+import { StorageAbstraction } from "./abstraction";
 
-export class BrandService implements BrandAbstraction {
-	constructor(private repo: BrandAbstraction) {}
+export class StorageService implements StorageAbstraction {
+	constructor(private repo: StorageAbstraction) {}
 
 	public create(payload: ICreateRequest): Promise<void> {
 		return this.repo.create(payload);

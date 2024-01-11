@@ -11,6 +11,7 @@ import { StyleSheetManager } from "styled-components";
 import HomeIcon from "../../assets/icons/Home";
 import MarketIcon from "../../assets/icons/Market";
 import { useTheme } from "../../hooks";
+import StorageIcon from "../../assets/icons/Storage";
 
 interface IMenuLateral {
 	expanded?: boolean;
@@ -58,6 +59,11 @@ export const MenuLateral: React.FC<IMenuLateral> = ({ expanded }) => {
 			path: "/brands",
 			icon: <MarketIcon theme={theme} />,
 			name: "Marcas",
+		},
+		{
+			path: "/storages",
+			icon: <StorageIcon theme={theme} />,
+			name: "Estoques",
 		},
 	];
 

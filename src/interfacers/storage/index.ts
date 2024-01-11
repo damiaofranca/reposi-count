@@ -1,5 +1,5 @@
 import { IGetOneRequest } from "./request/IGetOne";
-import { IGetAllRequest } from "./request/IGetAll";
+import { IFilteredParams, IGetAllRequest } from "./request/IGetAll";
 import { ICreateRequest } from "./request/ICreate";
 import { IDataUpdateRequest, IUpdateRequest } from "./request/IUpdate";
 import { IDeleteRequest } from "./request/IDelete";
@@ -9,12 +9,16 @@ import { IGetAllResponse } from "./response/IGetAll";
 import { IUpdateResponse } from "./response/IUpdate";
 import { IDeleteResponse } from "./response/IDelete";
 
-export interface IBrand {
+export interface IStorage {
 	id: string;
-	name: string;
-	cnpj: string;
-	createdAt: string;
-	updateAt: string;
+	cep: string;
+	city: string;
+	state: string;
+	street: string;
+	identifier: string;
+	numberStorage: number;
+	createdAt: Date;
+	updateAt: Date;
 }
 
 export type {
@@ -28,5 +32,6 @@ export type {
 	IGetOneResponse,
 	ICreateResponse,
 	IDeleteResponse,
+	IFilteredParams,
 	IDataUpdateRequest,
 };

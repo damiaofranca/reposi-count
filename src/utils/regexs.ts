@@ -1,3 +1,5 @@
 const onlyNumber = /^\d+$/;
 
-export { onlyNumber };
+const cep = /^\d{5}-\d{3}$/;
+
+export { onlyNumber, cep };
