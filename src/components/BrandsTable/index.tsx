@@ -10,12 +10,15 @@ import {
 } from "@nextui-org/react";
 
 import { useAuth } from "../../hooks";
-import { useGetAllBrand } from "../../api/brands";
+import { useDeleteBrand, useGetAllBrand } from "../../api/brands";
 import { EditIcon } from "../../assets/icons/Edit";
 import { DeleteIcon } from "../../assets/icons/Delete";
 import { Meta } from "../../interfacers/common/iBaseList";
 import { ConfirmModal } from "../ConfirmModal";
 import { IBrand } from "../../interfacers/brand";
+import { toast } from "react-toastify";
+import { queryClient } from "../../api";
+import { columnsBrand, columnsBrandAdmin } from "../../utils/tables";
 
 interface IBrandsTable {
 	filter: {
@@ -36,21 +39,6 @@ interface IColumnBrand {
 
 type ColumnKey = "name" | "cnpj" | "actions";
 
-const columns = [
-	{
-		key: "name",
-		label: "Nome",
-	},
-	{
-		key: "cnpj",
-		label: "CNPJ",
-	},
-	{
-		key: "actions",
-		label: "Ações",
-	},
-];
-
 export const BrandsTable: FC<IBrandsTable> = ({
 	filter,
 	onUpdate,
@@ -69,6 +57,21 @@ export const BrandsTable: FC<IBrandsTable> = ({
 		},
 	});
 
+	const { mutateAsync: onDelete } = useDeleteBrand({
+		onSuccess: () => {
+			toast.success("Marca deletado com sucesso.", { autoClose: 700 });
+			queryClient.invalidateQueries("brands");
+		},
+	});
+
+	const onDeleteBrandFn = async () => {
+		if (brandSelected) {
+			try {
+				await onDelete({ id: brandSelected.id });
+			} catch {}
+		}
+	};
+
 	const onDeleteBrand = (brand: IBrand) => {
 		setBrandSelected(brand);
 		confirmModalRef?.current?.onOpen();
@@ -79,9 +82,17 @@ export const BrandsTable: FC<IBrandsTable> = ({
 
 		switch (true) {
 			case columnKey === "name":
-				return <p className="text-bold text-sm capitalize">{cellValue}</p>;
+				return (
+					<p className="text-bold text-sm capitalize dark:text-gray-400">
+						{cellValue}
+					</p>
+				);
 			case columnKey === "cnpj":
-				return <p className="text-bold text-sm capitalize">{cellValue}</p>;
+				return (
+					<p className="text-bold text-sm capitalize dark:text-gray-400">
+						{cellValue}
+					</p>
+				);
 			case columnKey === "actions" && user && user.user_type === "ADMIN":
 				return (
 					<div className="relative flex items-center gap-2 justify-end">
@@ -117,11 +128,18 @@ export const BrandsTable: FC<IBrandsTable> = ({
 			metaPage(data.meta);
 		}
 	}, [data]);
+
 	return (
 		<>
 			{data ? (
 				<Table aria-label="Brands list" isStriped>
-					<TableHeader columns={columns}>
+					<TableHeader
+						columns={
+							user && user.user_type === "ADMIN"
+								? columnsBrandAdmin
+								: columnsBrand
+						}
+					>
 						{(column) => (
 							<TableColumn
 								key={column.key}
@@ -152,7 +170,7 @@ export const BrandsTable: FC<IBrandsTable> = ({
 				submitText="Remover"
 				submitColor="danger"
 				ref={confirmModalRef}
-				submitFn={() => console.log(brandSelected)}
+				submitFn={onDeleteBrandFn}
 				content={
 					<span className="text-sm text-default-400">
 						Têm certeza que deseja remover essa marca ?

@@ -17,10 +17,12 @@ import { isValidCnpj } from "../../../components/AddBrand/schema";
 import { AddBrandBtn, Container, ContainerHeader } from "./styles";
 import { FilterChangeIcon } from "../../../assets/icons/FilterChange";
 import { IBrand } from "../../../interfacers/brand";
+import { useAuth } from "../../../hooks";
 
 interface IBrands {}
 
 export const Brands: FC<IBrands> = () => {
+	const { user } = useAuth();
 	const [showModalAddBrand, setShowModalAddBrand] =
 		React.useState<boolean>(false);
 	const [search, setSearch] = React.useState<string>("");
@@ -112,17 +114,21 @@ export const Brands: FC<IBrands> = () => {
 								</Button>
 							}
 						/>
-						<div>
-							<AddBrandBtn
-								color="primary"
-								onClick={onShowBrandModal}
-								startContent={
-									<RegisterIcon src={plusIcon} alt="Cadastrar marca" />
-								}
-							>
-								Cadastrar marca
-							</AddBrandBtn>
-						</div>
+						{user && user.user_type === "ADMIN" ? (
+							<div>
+								<AddBrandBtn
+									color="primary"
+									onClick={onShowBrandModal}
+									startContent={
+										<RegisterIcon src={plusIcon} alt="Cadastrar marca" />
+									}
+								>
+									Cadastrar marca
+								</AddBrandBtn>
+							</div>
+						) : (
+							<></>
+						)}
 					</div>
 				</ContainerHeader>
 				<div className="flex flex-col">

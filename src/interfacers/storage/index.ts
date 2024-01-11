@@ -11,12 +11,13 @@ import { IDeleteResponse } from "./response/IDelete";
 
 export interface IStorage {
 	id: string;
+	uf: string;
 	cep: string;
 	city: string;
-	state: string;
 	street: string;
+	district: string;
 	identifier: string;
-	numberStorage: number;
+	localNumber: string;
 	createdAt: Date;
 	updateAt: Date;
 }

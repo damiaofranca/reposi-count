@@ -19,6 +19,7 @@ import { InputNew } from "../InputNew";
 
 import { Form, FormItem } from "./styles";
 import { useCreateBrand } from "../../api/brands";
+import { queryClient } from "../../api";
 
 interface IAddBrand {
 	onClose: () => void;
@@ -33,6 +34,7 @@ export const AddBrand: React.FC<IAddBrand> = ({ onClose }) => {
 				autoClose: 2000,
 				position: "top-right",
 			});
+			queryClient.invalidateQueries(`brands`);
 			setIsLoading(false);
 			onClose();
 			resetForm();
@@ -102,7 +104,7 @@ export const AddBrand: React.FC<IAddBrand> = ({ onClose }) => {
 								theme === "dark" ? "text-[#fff]" : "text-[#4f4f4f]"
 							}`}
 						>
-							Cadastrar marca
+							Cadastrar estoque
 						</ModalHeader>
 						<ModalBody>
 							<Form onSubmit={handleSubmit}>
@@ -145,7 +147,7 @@ export const AddBrand: React.FC<IAddBrand> = ({ onClose }) => {
 										color="primary"
 										isDisabled={!isValid}
 										isLoading={isLoading}
-										spinner={<Spinner size="sm" color="primary" />}
+										spinner={<Spinner size="sm" color="danger" />}
 									>
 										Cadastrar
 									</Button>

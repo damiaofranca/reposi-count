@@ -1,21 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { FC, ReactNode, createContext } from "react";
+import { FC, ReactNode, createContext, useMemo, useState } from "react";
 
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
-import { IAuthContext } from "./types";
+import { IAuthContext, IUser } from "./types";
 import {
 	ILoginRequest,
 	ILoginResponse,
 	IRegisterRequest,
 } from "../../interfacers/auth/ILogin";
 import api from "../../api";
-import { decodeHash, encryptToken, removeToken } from "../../utils/script";
+import { encryptToken, removeToken } from "../../utils/script";
 
 export const AuthContext = createContext({} as IAuthContext);
 
 export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
-	const user = decodeHash();
+	const [user, setUser] = useState<IUser | null>(null);
+
+	const onSetCurrentUser = (_user: IUser) => {
+		setUser(_user);
+	};
+	const onRemoveCurrentUser = () => {
+		setUser(null);
+	};
 
 	const onSignIn = async (values: ILoginRequest) => {
 		try {
@@ -66,6 +73,8 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
 				onSignUp,
 				onSignOut,
 				onDeleteAccount,
+				onSetCurrentUser,
+				onRemoveCurrentUser,
 			}}
 		>
 			{children}

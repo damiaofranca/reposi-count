@@ -9,12 +9,12 @@ export const isValidCnpj = (cnpj: string) => {
 
 const RegisterBrandSchema = Yup.object().shape({
 	name: Yup.string()
-		.required("Campo obrigatório")
-		.min(6, "O valor minímo são 6 digítos")
-		.max(256, "Valor permitido exedido"),
+		.required("Campo obrigatório.")
+		.min(6, "O valor minímo são 6 digítos.")
+		.max(256, "Valor permitido exedido."),
 	cnpj: Yup.string()
-		.required("CNPJ é obrigatório")
-		.test("valid-cnpj", "CNPJ inválido", isValidCnpj),
+		.required("Campo obrigatório.")
+		.test("valid-cnpj", "CNPJ inválido.", isValidCnpj),
 });
 
 export default RegisterBrandSchema;

@@ -10,12 +10,15 @@ import {
 } from "@nextui-org/react";
 
 import { useAuth } from "../../hooks";
-import { useGetAllStorage } from "../../api/storages";
+import { useDeleteStorage, useGetAllStorage } from "../../api/storages";
 import { EditIcon } from "../../assets/icons/Edit";
 import { DeleteIcon } from "../../assets/icons/Delete";
 import { Meta } from "../../interfacers/common/iBaseList";
 import { ConfirmModal } from "../ConfirmModal";
 import { IStorage } from "../../interfacers/storage";
+import { toast } from "react-toastify";
+import { queryClient } from "../../api";
+import { columnsStorage, columnsStorageAdmin } from "../../utils/tables";
 
 interface IStoragesTable {
 	filter: {
@@ -23,10 +26,11 @@ interface IStoragesTable {
 		city?: string;
 		page?: number;
 		limit?: number;
-		state?: string;
+		uf?: string;
 		street?: string;
+		district?: string;
 		identifier?: string;
-		numberStorage?: number;
+		localNumber?: number;
 	};
 	metaPage: (value: Meta) => void;
 	onUpdate: (value: IStorage) => void;
@@ -36,37 +40,6 @@ interface IStoragesTable {
 interface IColumnStorage extends IStorage {
 	actions?: string;
 }
-
-const columns = [
-	{
-		key: "identifier",
-		label: "Identificador",
-	},
-	{
-		key: "cep",
-		label: "CEP",
-	},
-	{
-		key: "state",
-		label: "Estado",
-	},
-	{
-		key: "city",
-		label: "Cidade",
-	},
-	{
-		key: "street",
-		label: "Rua",
-	},
-	{
-		key: "numberStorage",
-		label: "Numéro",
-	},
-	{
-		key: "actions",
-		label: "Ações",
-	},
-];
 
 export const StoragesTable: FC<IStoragesTable> = ({
 	filter,
@@ -80,39 +53,83 @@ export const StoragesTable: FC<IStoragesTable> = ({
 	const { data, isLoading } = useGetAllStorage({
 		filters: {
 			limit: 10,
+			...(filter.uf ? { uf: filter.uf } : {}),
 			...(filter.cep ? { cep: filter.cep } : {}),
 			...(filter.city ? { city: filter.city } : {}),
 			...(filter.page ? { page: filter.page } : {}),
-			...(filter.state ? { state: filter.state } : {}),
 			...(filter.street ? { street: filter.street } : {}),
+			...(filter.district ? { street: filter.district } : {}),
 			...(filter.identifier ? { identifier: filter.identifier } : {}),
-			...(filter.numberStorage ? { numberStorage: filter.numberStorage } : {}),
+			...(filter.localNumber ? { localNumber: filter.localNumber } : {}),
 		},
 	});
+
+	const { mutateAsync: onDelete } = useDeleteStorage({
+		onSuccess: () => {
+			toast.success("Estoque deletado com sucesso.", { autoClose: 700 });
+			queryClient.invalidateQueries("storages");
+		},
+	});
+
+	const onDeleteStorageFn = async () => {
+		if (storageSelected) {
+			try {
+				await onDelete({ id: storageSelected.id });
+			} catch {}
+		}
+	};
 
 	const onDeleteStorage = (storage: IStorage) => {
 		setStorageSelected(storage);
 		confirmModalRef?.current?.onOpen();
 	};
 
-	useEffect(() => {}, [filter]);
-
 	const renderCell = useCallback((storage: any, columnKey: string) => {
 		const cellValue = storage[columnKey];
 
 		switch (true) {
 			case columnKey === "identifier":
-				return <p className="text-bold text-sm capitalize">{cellValue}</p>;
+				return (
+					<p className="text-bold text-sm capitalize dark:text-gray-400">
+						{cellValue}
+					</p>
+				);
 			case columnKey === "cep":
-				return <p className="text-bold text-sm capitalize">{cellValue}</p>;
-			case columnKey === "state":
-				return <p className="text-bold text-sm capitalize">{cellValue}</p>;
+				return (
+					<p className="text-bold text-sm capitalize dark:text-gray-400">
+						{cellValue}
+					</p>
+				);
+			case columnKey === "uf":
+				return (
+					<p className="text-bold text-sm capitalize dark:text-gray-400">
+						{cellValue}
+					</p>
+				);
 			case columnKey === "city":
-				return <p className="text-bold text-sm capitalize">{cellValue}</p>;
+				return (
+					<p className="text-bold text-sm capitalize dark:text-gray-400">
+						{cellValue}
+					</p>
+				);
+			case columnKey === "district":
+				return (
+					<p className="text-bold text-sm capitalize dark:text-gray-400">
+						{cellValue}
+					</p>
+				);
 			case columnKey === "street":
-				return <p className="text-bold text-sm capitalize">{cellValue}</p>;
-			case columnKey === "numberStorage":
-				return <p className="text-bold text-sm capitalize">{cellValue}</p>;
+				return (
+					<p className="text-bold text-sm capitalize dark:text-gray-400">
+						{cellValue}
+					</p>
+				);
+			case columnKey === "localNumber":
+				return (
+					<p className="text-bold text-sm capitalize dark:text-gray-400">
+						{cellValue}
+					</p>
+				);
 
 			case columnKey === "actions" && user && user.user_type === "ADMIN":
 				return (
@@ -149,11 +166,20 @@ export const StoragesTable: FC<IStoragesTable> = ({
 			metaPage(data.meta);
 		}
 	}, [data]);
+
+	useEffect(() => {}, [filter]); // DONT REMOVE THIS!!!
+
 	return (
 		<>
 			{data ? (
 				<Table aria-label="Storages list" isStriped>
-					<TableHeader columns={columns}>
+					<TableHeader
+						columns={
+							user && user.user_type === "ADMIN"
+								? columnsStorageAdmin
+								: columnsStorage
+						}
+					>
 						{(column) => (
 							<TableColumn
 								key={column.key}
@@ -184,10 +210,10 @@ export const StoragesTable: FC<IStoragesTable> = ({
 				submitText="Remover"
 				submitColor="danger"
 				ref={confirmModalRef}
-				submitFn={() => console.log(storageSelected)}
+				submitFn={onDeleteStorageFn}
 				content={
 					<span className="text-sm text-default-400">
-						Têm certeza que deseja remover essa estoque ?
+						Têm certeza que deseja remover esse estoque ?
 					</span>
 				}
 			>

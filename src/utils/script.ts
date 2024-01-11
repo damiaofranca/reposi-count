@@ -60,7 +60,11 @@ const decodeTokenAsync = () => {
 };
 
 const decodeHash = () => {
-	if (!localStorage.getItem(String(process.env.REACT_APP_LOCAL_TOKEN))) {
+	const localToken = localStorage.getItem(
+		String(process.env.REACT_APP_LOCAL_TOKEN),
+	);
+
+	if (!localToken) {
 		return false;
 	}
 
@@ -70,7 +74,9 @@ const decodeHash = () => {
 		usertype: string;
 	};
 
-	return { email: data.email, exp: data.exp, user_type: data.usertype };
+	const { email, exp, usertype: user_type } = data;
+
+	return { email, exp, user_type };
 };
 
 const removeToken = () => {

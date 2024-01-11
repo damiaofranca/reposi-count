@@ -7,6 +7,10 @@ const baseURL = process.env.REACT_APP_API_URL;
 
 export const queryClient = new QueryClient();
 
+export const apiViaCEP = axios.create({
+	baseURL: "https://viacep.com.br/ws",
+});
+
 const api = axios.create({
 	baseURL,
 });

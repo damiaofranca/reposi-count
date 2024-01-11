@@ -18,27 +18,30 @@ import {
 	StoragesTable,
 } from "../../../components";
 
+import { cep } from "../../../utils/regexs";
+import { formatField } from "../../../utils/formats";
 import plusIcon from "../../../assets/icons/plus.svg";
 import { Meta } from "../../../interfacers/common/iBaseList";
 import { useDelayQuery } from "../../../hooks/useDelayQuery";
 import { AddStorageBtn, Container, ContainerHeader } from "./styles";
 import { FilterChangeIcon } from "../../../assets/icons/FilterChange";
 import { IFilteredParams, IStorage } from "../../../interfacers/storage";
-import { cep } from "../../../utils/regexs";
-import { formatField } from "../../../utils/formats";
+import { useAuth } from "../../../hooks";
 
 interface IStorages {}
 
 const filterOps = [
 	{ label: "CEP", value: "cep", search: "" },
+	{ label: "Estado", value: "uf", search: "" },
 	{ label: "Rua", value: "street", search: "" },
 	{ label: "Cidade", value: "city", search: "" },
-	{ label: "Estado", value: "state", search: "" },
-	{ label: "Numéro", value: "numberStorage", search: "" },
+	{ label: "Bairro", value: "district", search: "" },
+	{ label: "Numéro", value: "localNumber", search: "" },
 	{ label: "Identificação", value: "identifier", search: "" },
 ];
 
 export const Storages: FC<IStorages> = () => {
+	const { user } = useAuth();
 	const [showModalAddStorage, setShowModalAddStorage] =
 		React.useState<boolean>(false);
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -171,17 +174,22 @@ export const Storages: FC<IStorages> = () => {
 								</Dropdown>
 							}
 						/>
-						<div>
-							<AddStorageBtn
-								color="primary"
-								onClick={onShowStorageModal}
-								startContent={
-									<RegisterIcon src={plusIcon} alt="Cadastrar estoque" />
-								}
-							>
-								Cadastrar estoque
-							</AddStorageBtn>
-						</div>
+
+						{user && user.user_type === "ADMIN" ? (
+							<div>
+								<AddStorageBtn
+									color="primary"
+									onClick={onShowStorageModal}
+									startContent={
+										<RegisterIcon src={plusIcon} alt="Cadastrar estoque" />
+									}
+								>
+									Cadastrar estoque
+								</AddStorageBtn>
+							</div>
+						) : (
+							<></>
+						)}
 					</div>
 				</ContainerHeader>
 				<div className="flex flex-col">

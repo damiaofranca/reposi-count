@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { fromUnixTime, isAfter } from "date-fns";
 import { Navigate, Outlet } from "react-router-dom";
 import { decodeHash, removeToken } from "../../utils/script";
+import { useAuth } from "../../hooks";
 
 export type IProtectedPageProps = {
 	redirectTo?: string;
@@ -17,14 +18,24 @@ export const ProtectedPage: React.FC<IProtectedPageProps> = ({
 	redirectTo = "/login",
 }) => {
 	const user = decodeHash();
+	const { user: _user, onSetCurrentUser, onRemoveCurrentUser } = useAuth();
+
+	useEffect(() => {
+		if (!_user && user) {
+			onSetCurrentUser(user);
+		}
+	}, [user]);
 
 	if (validadePage) {
 		if (!user) {
 			removeToken();
+			onRemoveCurrentUser();
 			return <Navigate to={redirectTo} />;
 		}
 
-		if (!user || isAfter(new Date(), fromUnixTime(user.exp))) {
+		if (isAfter(new Date(), fromUnixTime(user.exp))) {
+			removeToken();
+			onRemoveCurrentUser();
 			return <Navigate to={redirectTo} />;
 		}
 	}

@@ -152,7 +152,7 @@ export const EditBrand: React.FC<IEditBrand> = ({ brand, onClose }) => {
 										color="primary"
 										isDisabled={!isValid}
 										isLoading={isLoading}
-										spinner={<Spinner size="sm" color="primary" />}
+										spinner={<Spinner size="sm" color="danger" />}
 									>
 										Atualizar
 									</Button>
