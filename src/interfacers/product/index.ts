@@ -9,15 +9,16 @@ import { IGetAllResponse } from "./response/IGetAll";
 import { IUpdateResponse } from "./response/IUpdate";
 import { IDeleteResponse } from "./response/IDelete";
 
-export interface IStorage {
+export type TYPE_QUANTITY = "KG" | "UNI" | "LTS" | "LOTES";
+
+export interface IProduct {
 	id: string;
-	uf: string;
-	cep: string;
-	city: string;
-	street: string;
-	district: string;
-	identifier: string;
-	local_number: string;
+	name: string;
+	brand: string;
+	storage: string;
+	quantity: string;
+	type_of_product: string;
+	typeOfQuantity: TYPE_QUANTITY;
 	created_at: Date;
 	update_at: Date;
 }

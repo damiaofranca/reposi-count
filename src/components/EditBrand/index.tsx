@@ -144,12 +144,13 @@ export const EditBrand: React.FC<IEditBrand> = ({ brand, onClose }) => {
 									/>
 								</FormItem>
 								<ModalFooter style={{ paddingRight: 0 }}>
-									<Button color="danger" variant="solid" onPress={clearData}>
+									<Button color="danger" variant="shadow" onPress={clearData}>
 										Limpar campos
 									</Button>
 									<Button
 										type="submit"
 										color="primary"
+										variant="shadow"
 										isDisabled={!isValid}
 										isLoading={isLoading}
 										spinner={<Spinner size="sm" color="danger" />}

@@ -104,7 +104,7 @@ export const AddBrand: React.FC<IAddBrand> = ({ onClose }) => {
 								theme === "dark" ? "text-[#fff]" : "text-[#4f4f4f]"
 							}`}
 						>
-							Cadastrar estoque
+							Cadastrar marca
 						</ModalHeader>
 						<ModalBody>
 							<Form onSubmit={handleSubmit}>
@@ -139,7 +139,7 @@ export const AddBrand: React.FC<IAddBrand> = ({ onClose }) => {
 									/>
 								</FormItem>
 								<ModalFooter style={{ paddingRight: 0 }}>
-									<Button color="danger" variant="solid" onPress={clearData}>
+									<Button color="danger" variant="shadow" onPress={clearData}>
 										Limpar campos
 									</Button>
 									<Button

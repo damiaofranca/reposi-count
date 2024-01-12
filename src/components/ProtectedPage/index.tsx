@@ -17,23 +17,27 @@ export const ProtectedPage: React.FC<IProtectedPageProps> = ({
 	validadePage = true,
 	redirectTo = "/login",
 }) => {
-	const user = decodeHash();
-	const { user: _user, onSetCurrentUser, onRemoveCurrentUser } = useAuth();
+	const profile_data = decodeHash();
+	const {
+		profile_data: _profile_data,
+		onSetCurrentUser,
+		onRemoveCurrentUser,
+	} = useAuth();
 
 	useEffect(() => {
-		if (!_user && user) {
-			onSetCurrentUser(user);
+		if (!_profile_data && profile_data) {
+			onSetCurrentUser(profile_data);
 		}
-	}, [user]);
+	}, [profile_data]);
 
 	if (validadePage) {
-		if (!user) {
+		if (!profile_data) {
 			removeToken();
 			onRemoveCurrentUser();
 			return <Navigate to={redirectTo} />;
 		}
 
-		if (isAfter(new Date(), fromUnixTime(user.exp))) {
+		if (isAfter(new Date(), fromUnixTime(profile_data.exp))) {
 			removeToken();
 			onRemoveCurrentUser();
 			return <Navigate to={redirectTo} />;

@@ -76,6 +76,7 @@ const ForgotPassword: React.FC = () => {
 						<Button
 							type="submit"
 							color="primary"
+							variant="shadow"
 							className="w-full"
 							isDisabled={!isValid}
 							isLoading={isLoading}

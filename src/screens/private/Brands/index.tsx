@@ -22,7 +22,7 @@ import { useAuth } from "../../../hooks";
 interface IBrands {}
 
 export const Brands: FC<IBrands> = () => {
-	const { user } = useAuth();
+	const { profile_data } = useAuth();
 	const [showModalAddBrand, setShowModalAddBrand] =
 		React.useState<boolean>(false);
 	const [search, setSearch] = React.useState<string>("");
@@ -104,20 +104,20 @@ export const Brands: FC<IBrands> = () => {
 							}
 							endContent={
 								<Button
-									isIconOnly
-									variant="light"
-									aria-label="Like"
 									size="sm"
+									isIconOnly
+									variant="shadow"
 									onClick={onChangeFilter}
 								>
 									<FilterChangeIcon />
 								</Button>
 							}
 						/>
-						{user && user.user_type === "ADMIN" ? (
+						{profile_data && profile_data.profile_data_type === "ADMIN" ? (
 							<div>
 								<AddBrandBtn
 									color="primary"
+									variant="shadow"
 									onClick={onShowBrandModal}
 									startContent={
 										<RegisterIcon src={plusIcon} alt="Cadastrar marca" />
@@ -146,7 +146,8 @@ export const Brands: FC<IBrands> = () => {
 					{!isLoading ? (
 						<div className="flex mt-4 justify-end">
 							<Pagination
-								color="secondary"
+								showShadow
+								color="primary"
 								onChange={(e) => onChangePage(e)}
 								page={currentMeta?.currentPage || 1}
 								total={currentMeta?.totalPages || 1}

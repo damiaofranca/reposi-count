@@ -71,12 +71,12 @@ const decodeHash = () => {
 	const data = jwtDecode(decodeToken()) as {
 		exp: number;
 		email: string;
-		usertype: string;
+		profile_data_type: string;
 	};
 
-	const { email, exp, usertype: user_type } = data;
+	const { email, exp, profile_data_type } = data;
 
-	return { email, exp, user_type };
+	return { email, exp, profile_data_type };
 };
 
 const removeToken = () => {

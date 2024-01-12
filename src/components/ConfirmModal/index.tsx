@@ -74,7 +74,7 @@ export const ConfirmModal = forwardRef<
 						<ModalFooter>
 							<Button
 								size="sm"
-								variant="light"
+								variant="shadow"
 								onPress={onClose}
 								className={theme === "dark" ? "text-white" : ""}
 							>

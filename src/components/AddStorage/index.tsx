@@ -33,7 +33,7 @@ const initial_values = {
 	street: "",
 	district: "",
 	identifier: "",
-	localNumber: "",
+	local_number: "",
 };
 
 export const AddStorage: React.FC<IAddStorage> = ({ onClose }) => {
@@ -246,28 +246,29 @@ export const AddStorage: React.FC<IAddStorage> = ({ onClose }) => {
 									<InputNew
 										variant="bordered"
 										onBlur={handleBlur}
-										name="localNumber"
+										name="local_number"
 										onChange={handleChange}
 										label="Numéro do estoque"
-										value={values.localNumber}
+										value={values.local_number}
 										placeholder="Digite o nome da rua"
 										isInvalid={
-											errors.localNumber && touched.localNumber ? true : false
+											errors.local_number && touched.local_number ? true : false
 										}
 										errorMessage={
-											errors.localNumber && touched.localNumber
-												? errors.localNumber
+											errors.local_number && touched.local_number
+												? errors.local_number
 												: ""
 										}
 									/>
 								</FormItem>
 								<ModalFooter style={{ paddingRight: 0 }}>
-									<Button color="danger" variant="solid" onPress={clearData}>
+									<Button color="danger" variant="shadow" onPress={clearData}>
 										Limpar campos
 									</Button>
 									<Button
 										type="submit"
 										color="primary"
+										variant="shadow"
 										isDisabled={!isValid}
 										isLoading={isLoading}
 										spinner={<Spinner size="sm" color="danger" />}

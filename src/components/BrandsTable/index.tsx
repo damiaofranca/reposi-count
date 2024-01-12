@@ -45,7 +45,7 @@ export const BrandsTable: FC<IBrandsTable> = ({
 	metaPage,
 	onLoading,
 }) => {
-	const { user } = useAuth();
+	const { profile_data } = useAuth();
 	const confirmModalRef = useRef<any>(null);
 	const [brandSelected, setBrandSelected] = useState<IBrand | null>(null);
 	const { data, isLoading } = useGetAllBrand({
@@ -93,7 +93,9 @@ export const BrandsTable: FC<IBrandsTable> = ({
 						{cellValue}
 					</p>
 				);
-			case columnKey === "actions" && user && user.user_type === "ADMIN":
+			case columnKey === "actions" &&
+				profile_data &&
+				profile_data.profile_data_type === "ADMIN":
 				return (
 					<div className="relative flex items-center gap-2 justify-end">
 						<Tooltip content="Editar marca">
@@ -135,7 +137,7 @@ export const BrandsTable: FC<IBrandsTable> = ({
 				<Table aria-label="Brands list" isStriped>
 					<TableHeader
 						columns={
-							user && user.user_type === "ADMIN"
+							profile_data && profile_data.profile_data_type === "ADMIN"
 								? columnsBrandAdmin
 								: columnsBrand
 						}

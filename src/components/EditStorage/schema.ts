@@ -30,7 +30,7 @@ const RegisterStorageSchema = Yup.object().shape({
 		.required("Campo obrigatório.")
 		.min(2, "O valor minímo são 2 letras.")
 		.max(256, "Valor permitido exedido."),
-	localNumber: Yup.string()
+	local_number: Yup.string()
 		.required("Campo obrigatório.")
 		.min(1, "O valor minímo são 1 digíto.")
 		.max(256, "Valor permitido exedido."),

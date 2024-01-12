@@ -7,7 +7,7 @@ export interface IGetAllRequest {
 		state?: string;
 		street?: string;
 		identifier?: string;
-		localNumber?: number;
+		local_number?: number;
 	};
 }
 
@@ -16,5 +16,5 @@ export type IFilteredParams =
 	| { label: "Rua"; value: "street"; search: string }
 	| { label: "Cidade"; value: "city"; search: string }
 	| { label: "Estado"; value: "state"; search: string }
-	| { label: "Numéro"; value: "localNumber"; search: string }
+	| { label: "Numéro"; value: "local_number"; search: string }
 	| { label: "Identificação"; value: "identifier"; search: string };

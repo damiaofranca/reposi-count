@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import {
 	Table,
@@ -9,28 +11,28 @@ import {
 	TableHeader,
 } from "@nextui-org/react";
 
+import { EyeFilledIcon } from "..";
 import { useAuth } from "../../hooks";
-import { useDeleteStorage, useGetAllStorage } from "../../api/storages";
+import { queryClient } from "../../api";
+import { ConfirmModal } from "../ConfirmModal";
 import { EditIcon } from "../../assets/icons/Edit";
+import { columnsStorage } from "../../utils/tables";
+import { IStorage } from "../../interfacers/storage";
 import { DeleteIcon } from "../../assets/icons/Delete";
 import { Meta } from "../../interfacers/common/iBaseList";
-import { ConfirmModal } from "../ConfirmModal";
-import { IStorage } from "../../interfacers/storage";
-import { toast } from "react-toastify";
-import { queryClient } from "../../api";
-import { columnsStorage, columnsStorageAdmin } from "../../utils/tables";
+import { useDeleteStorage, useGetAllStorage } from "../../api/storages";
 
 interface IStoragesTable {
 	filter: {
+		uf?: string;
 		cep?: string;
 		city?: string;
 		page?: number;
 		limit?: number;
-		uf?: string;
 		street?: string;
 		district?: string;
 		identifier?: string;
-		localNumber?: number;
+		local_number?: number;
 	};
 	metaPage: (value: Meta) => void;
 	onUpdate: (value: IStorage) => void;
@@ -47,7 +49,8 @@ export const StoragesTable: FC<IStoragesTable> = ({
 	metaPage,
 	onLoading,
 }) => {
-	const { user } = useAuth();
+	const navigate = useNavigate();
+	const { profile_data } = useAuth();
 	const confirmModalRef = useRef<any>(null);
 	const [storageSelected, setStorageSelected] = useState<IStorage | null>(null);
 	const { data, isLoading } = useGetAllStorage({
@@ -60,7 +63,7 @@ export const StoragesTable: FC<IStoragesTable> = ({
 			...(filter.street ? { street: filter.street } : {}),
 			...(filter.district ? { street: filter.district } : {}),
 			...(filter.identifier ? { identifier: filter.identifier } : {}),
-			...(filter.localNumber ? { localNumber: filter.localNumber } : {}),
+			...(filter.local_number ? { local_number: filter.local_number } : {}),
 		},
 	});
 
@@ -84,78 +87,99 @@ export const StoragesTable: FC<IStoragesTable> = ({
 		confirmModalRef?.current?.onOpen();
 	};
 
-	const renderCell = useCallback((storage: any, columnKey: string) => {
-		const cellValue = storage[columnKey];
+	const onSeeDetail = (storage: IStorage) => {
+		navigate(`/storages/${storage.id}`);
+	};
 
-		switch (true) {
-			case columnKey === "identifier":
-				return (
-					<p className="text-bold text-sm capitalize dark:text-gray-400">
-						{cellValue}
-					</p>
-				);
-			case columnKey === "cep":
-				return (
-					<p className="text-bold text-sm capitalize dark:text-gray-400">
-						{cellValue}
-					</p>
-				);
-			case columnKey === "uf":
-				return (
-					<p className="text-bold text-sm capitalize dark:text-gray-400">
-						{cellValue}
-					</p>
-				);
-			case columnKey === "city":
-				return (
-					<p className="text-bold text-sm capitalize dark:text-gray-400">
-						{cellValue}
-					</p>
-				);
-			case columnKey === "district":
-				return (
-					<p className="text-bold text-sm capitalize dark:text-gray-400">
-						{cellValue}
-					</p>
-				);
-			case columnKey === "street":
-				return (
-					<p className="text-bold text-sm capitalize dark:text-gray-400">
-						{cellValue}
-					</p>
-				);
-			case columnKey === "localNumber":
-				return (
-					<p className="text-bold text-sm capitalize dark:text-gray-400">
-						{cellValue}
-					</p>
-				);
+	const renderCell = useCallback(
+		(storage: any, columnKey: string) => {
+			const cellValue = storage[columnKey];
 
-			case columnKey === "actions" && user && user.user_type === "ADMIN":
-				return (
-					<div className="relative flex items-center gap-2 justify-end">
-						<Tooltip content="Editar estoque">
-							<span
-								className="text-lg text-default-400 cursor-pointer rounded-full p-2 bg-gray-200 dark:bg-zinc-600 active:opacity-50"
-								onClick={() => onUpdate(storage)}
-							>
-								<EditIcon />
-							</span>
-						</Tooltip>
-						<Tooltip color="danger" content="Deletar estoque">
-							<span
-								className="text-lg text-danger cursor-pointer rounded-full p-2 bg-gray-200 dark:bg-zinc-600 active:opacity-50"
-								onClick={() => onDeleteStorage(storage)}
-							>
-								<DeleteIcon />
-							</span>
-						</Tooltip>
-					</div>
-				);
-			default:
-				return cellValue;
-		}
-	}, []);
+			switch (true) {
+				case columnKey === "identifier":
+					return (
+						<p className="text-bold text-sm capitalize dark:text-gray-400">
+							{cellValue}
+						</p>
+					);
+				case columnKey === "cep":
+					return (
+						<p className="text-bold text-sm capitalize dark:text-gray-400">
+							{cellValue}
+						</p>
+					);
+				case columnKey === "uf":
+					return (
+						<p className="text-bold text-sm capitalize dark:text-gray-400">
+							{cellValue}
+						</p>
+					);
+				case columnKey === "city":
+					return (
+						<p className="text-bold text-sm capitalize dark:text-gray-400">
+							{cellValue}
+						</p>
+					);
+				case columnKey === "district":
+					return (
+						<p className="text-bold text-sm capitalize dark:text-gray-400">
+							{cellValue}
+						</p>
+					);
+				case columnKey === "street":
+					return (
+						<p className="text-bold text-sm capitalize dark:text-gray-400">
+							{cellValue}
+						</p>
+					);
+				case columnKey === "local_number":
+					return (
+						<p className="text-bold text-sm capitalize dark:text-gray-400">
+							{cellValue}
+						</p>
+					);
+
+				case columnKey === "actions":
+					return (
+						<div className="relative flex items-center gap-2 justify-end">
+							<Tooltip color="primary" content="Ver detalhes">
+								<span
+									onClick={() => onSeeDetail(storage)}
+									className="text-lg text-primary cursor-pointer rounded-full p-2 bg-gray-200 dark:bg-zinc-600 active:opacity-50"
+								>
+									<EyeFilledIcon />
+								</span>
+							</Tooltip>
+							{profile_data && profile_data.profile_data_type === "ADMIN" ? (
+								<>
+									<Tooltip content="Editar estoque" color="warning">
+										<span
+											onClick={() => onUpdate(storage)}
+											className="text-lg text-warning-400 cursor-pointer rounded-full p-2 bg-gray-200 dark:bg-zinc-600 active:opacity-50"
+										>
+											<EditIcon />
+										</span>
+									</Tooltip>
+									<Tooltip color="danger" content="Deletar estoque">
+										<span
+											onClick={() => onDeleteStorage(storage)}
+											className="text-lg text-danger cursor-pointer rounded-full p-2 bg-gray-200 dark:bg-zinc-600 active:opacity-50"
+										>
+											<DeleteIcon />
+										</span>
+									</Tooltip>
+								</>
+							) : (
+								<></>
+							)}
+						</div>
+					);
+				default:
+					return cellValue;
+			}
+		},
+		[profile_data],
+	);
 
 	useEffect(() => {
 		onLoading(isLoading);
@@ -173,13 +197,7 @@ export const StoragesTable: FC<IStoragesTable> = ({
 		<>
 			{data ? (
 				<Table aria-label="Storages list" isStriped>
-					<TableHeader
-						columns={
-							user && user.user_type === "ADMIN"
-								? columnsStorageAdmin
-								: columnsStorage
-						}
-					>
+					<TableHeader columns={columnsStorage}>
 						{(column) => (
 							<TableColumn
 								key={column.key}

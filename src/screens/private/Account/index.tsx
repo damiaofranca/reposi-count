@@ -38,7 +38,7 @@ export const Account: React.FC<AccountProps> = () => {
 						isIconOnly
 						radius="full"
 						color="primary"
-						variant="light"
+						variant="shadow"
 						className="mr-4"
 						aria-label="Go back"
 						onClick={onNavigateBack}

@@ -13,8 +13,8 @@ export interface IBrand {
 	id: string;
 	name: string;
 	cnpj: string;
-	createdAt: string;
-	updateAt: string;
+	created_at: string;
+	update_at: string;
 }
 
 export type {

@@ -1,17 +1,16 @@
-import { ILoginRequest, IRegisterRequest } from "../../interfacers/auth/ILogin";
+import { ILoginRequest } from "../../interfacers/auth/ILogin";
 
 export interface IUser {
 	email: string;
-	user_type: string;
+	profile_data_type: string;
 }
 
 export interface IAuthContext {
-	user?: IUser;
+	profile_data?: IUser;
 
 	onSignOut: () => void;
 	onRemoveCurrentUser: () => void;
 	onDeleteAccount: () => Promise<void>;
-	onSetCurrentUser: (user: IUser) => void;
+	onSetCurrentUser: (profile_data: IUser) => void;
 	onSignIn: (values: ILoginRequest) => Promise<void>;
-	onSignUp: (values: IRegisterRequest) => Promise<void>;
 }

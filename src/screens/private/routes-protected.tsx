@@ -6,6 +6,7 @@ import { Account } from "./Account";
 import { Storages } from "./Storage";
 import { InitialPage } from "./InitialPage";
 import { DeleteAccount } from "./DeleteAccount";
+import { StoreDetail } from "./StoreDetail";
 
 export const ROUTES_PAGES: RouteObject[] = [
 	{
@@ -19,6 +20,10 @@ export const ROUTES_PAGES: RouteObject[] = [
 	{
 		path: "/storages",
 		element: <ProtectedPage element={Storages} validadePage={true} />,
+	},
+	{
+		path: "/storages/:id",
+		element: <ProtectedPage element={StoreDetail} validadePage={true} />,
 	},
 	{
 		path: "/account",

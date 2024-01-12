@@ -24,38 +24,7 @@ const columnsStorage = [
 		label: "Rua",
 	},
 	{
-		key: "localNumber",
-		label: "Numéro",
-	},
-];
-
-const columnsStorageAdmin = [
-	{
-		key: "identifier",
-		label: "Identificador",
-	},
-	{
-		key: "cep",
-		label: "CEP",
-	},
-	{
-		key: "uf",
-		label: "Estado",
-	},
-	{
-		key: "city",
-		label: "Cidade",
-	},
-	{
-		key: "district",
-		label: "Bairro",
-	},
-	{
-		key: "street",
-		label: "Rua",
-	},
-	{
-		key: "localNumber",
+		key: "local_number",
 		label: "Numéro",
 	},
 	{
@@ -96,4 +65,4 @@ const columnsBrandAdmin = [
 	},
 ];
 
-export { columnsStorage, columnsStorageAdmin, columnsBrand, columnsBrandAdmin };
+export { columnsStorage, columnsBrand, columnsBrandAdmin };

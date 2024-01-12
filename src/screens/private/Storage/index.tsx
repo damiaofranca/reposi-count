@@ -36,12 +36,12 @@ const filterOps = [
 	{ label: "Rua", value: "street", search: "" },
 	{ label: "Cidade", value: "city", search: "" },
 	{ label: "Bairro", value: "district", search: "" },
-	{ label: "Numéro", value: "localNumber", search: "" },
+	{ label: "Numéro", value: "local_number", search: "" },
 	{ label: "Identificação", value: "identifier", search: "" },
 ];
 
 export const Storages: FC<IStorages> = () => {
-	const { user } = useAuth();
+	const { profile_data } = useAuth();
 	const [showModalAddStorage, setShowModalAddStorage] =
 		React.useState<boolean>(false);
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -149,7 +149,7 @@ export const Storages: FC<IStorages> = () => {
 										<Button
 											size="sm"
 											isIconOnly
-											variant="light"
+											variant="shadow"
 											aria-label="Like"
 										>
 											<FilterChangeIcon />
@@ -175,10 +175,11 @@ export const Storages: FC<IStorages> = () => {
 							}
 						/>
 
-						{user && user.user_type === "ADMIN" ? (
+						{profile_data && profile_data.profile_data_type === "ADMIN" ? (
 							<div>
 								<AddStorageBtn
 									color="primary"
+									variant="shadow"
 									onClick={onShowStorageModal}
 									startContent={
 										<RegisterIcon src={plusIcon} alt="Cadastrar estoque" />
@@ -197,14 +198,17 @@ export const Storages: FC<IStorages> = () => {
 					{!isLoading ? (
 						<div className="flex mt-4 justify-end">
 							<Pagination
-								color="secondary"
+								showShadow
+								color="primary"
 								onChange={(e) => onChangePage(e)}
 								page={currentMeta?.currentPage || 1}
 								total={currentMeta?.totalPages || 1}
 							/>
 						</div>
 					) : (
-						<Spinner color="primary" label="Carregando..." />
+						<div className="h-full flex items-center justify-center">
+							<Spinner color="primary" label="Carregando..." />
+						</div>
 					)}
 				</div>
 			</Container>

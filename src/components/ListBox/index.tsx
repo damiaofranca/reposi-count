@@ -34,7 +34,7 @@ export const ListBox: React.FC<ListBoxProps> = ({ list, ariaLabelBox }) => {
 	return (
 		<ListboxWrapper>
 			<Listbox
-				variant="faded"
+				variant="shadow"
 				aria-label={ariaLabelBox}
 				itemClasses={{
 					base: "px-3 first:rounded-t-medium last:rounded-b-medium rounded-none gap-3 h-12 data-[hover=true]:bg-default-100/80 text-gray-50 bg-[#393939]",

@@ -1,7 +1,7 @@
-import { IBrand } from "../index";
+import { IProduct } from "../index";
 
 export interface IDataUpdateRequest
-	extends Omit<IBrand, "id" | "created_at" | "update_at"> {}
+	extends Partial<Omit<IProduct, "id" | "created_at" | "update_at">> {}
 
 export interface IUpdateRequest {
 	id: string;

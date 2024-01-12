@@ -1,3 +1,4 @@
+import { Button } from "@nextui-org/react";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -17,3 +18,13 @@ export const ContainerHeader = styled.div`
 	justify-content: space-between;
 `;
 
+export const ContainerTitle = styled.div`
+	display: flex;
+	flex-direction: column;
+`;
+
+export const AddProductBtn = styled(Button)`
+	height: 48px;
+	min-width: 180px;
+	margin-left: 18px;
+`;
