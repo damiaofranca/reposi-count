@@ -65,4 +65,35 @@ const columnsBrandAdmin = [
 	},
 ];
 
-export { columnsStorage, columnsBrand, columnsBrandAdmin };
+const columnsProducts = [
+	{
+		key: "name",
+		label: "Nome",
+	},
+	{
+		key: "brand",
+		label: "Marca",
+	},
+
+	{
+		key: "quantity",
+		label: "Quantidades",
+	},
+
+	{
+		key: "type_of_quantity",
+		label: "Quantidades por",
+	},
+
+	{
+		key: "type_of_product",
+		label: "Tipo de produto",
+	},
+
+	{
+		key: "actions",
+		label: "Ações",
+	},
+];
+
+export { columnsStorage, columnsBrand, columnsBrandAdmin, columnsProducts };

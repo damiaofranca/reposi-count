@@ -5,7 +5,13 @@ import { QueryClient } from "react-query";
 
 const baseURL = process.env.REACT_APP_API_URL;
 
-export const queryClient = new QueryClient();
+export const queryClient = new QueryClient({
+	defaultOptions: {
+		queries: {
+			retry: false,
+		},
+	},
+});
 
 export const apiViaCEP = axios.create({
 	baseURL: "https://viacep.com.br/ws",

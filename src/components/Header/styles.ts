@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.header`
+	z-index: 1;
 	width: 100%;
 	display: flex;
 	align-items: center;
@@ -22,20 +23,14 @@ export const Logo = styled.img`
 	}
 `;
 
-export const SwitchViewSideBar = styled.button<{ imgurl: string }>`
-	width: 24px;
-	height: 24px;
-	border: none;
-	cursor: pointer;
-	background: url(${({ imgurl }) => imgurl});
-
-	@media screen and (max-width: 770px) {
-		display: none;
-	}
-`;
-
 export const LeftSide = styled.div`
 	flex: 1;
+	height: 100%;
+	display: flex;
+	align-items: center;
+`;
+
+export const RightSide = styled.div`
 	height: 100%;
 	display: flex;
 	align-items: center;

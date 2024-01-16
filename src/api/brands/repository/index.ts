@@ -10,6 +10,8 @@ import {
 	IGetOneResponse,
 	IUpdateRequest,
 	IDeleteRequest,
+	IGetAllNoPaginationResponse,
+	IGetAllNoPaginationRequest,
 } from "../../../interfacers/brand";
 
 export class ApiRepository implements BrandAbstraction {
@@ -19,6 +21,14 @@ export class ApiRepository implements BrandAbstraction {
 	}
 
 	public async getAll(_payload: IGetAllRequest): Promise<IGetAllResponse> {
+		return await this._api
+			.get("/brands", { params: _payload.filters })
+			.then((val) => val.data);
+	}
+
+	public async getAllWithNoPagination(
+		_payload: IGetAllNoPaginationRequest,
+	): Promise<IGetAllNoPaginationResponse[]> {
 		return await this._api
 			.get("/brands", { params: _payload.filters })
 			.then((val) => val.data);

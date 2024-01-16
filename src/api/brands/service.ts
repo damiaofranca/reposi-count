@@ -2,10 +2,12 @@ import {
 	ICreateRequest,
 	IDeleteRequest,
 	IGetAllRequest,
-	IGetAllResponse,
 	IGetOneRequest,
-	IGetOneResponse,
 	IUpdateRequest,
+	IGetAllResponse,
+	IGetOneResponse,
+	IGetAllNoPaginationResponse,
+	IGetAllNoPaginationRequest,
 } from "../../interfacers/brand";
 import { BrandAbstraction } from "./abstraction";
 
@@ -18,6 +20,12 @@ export class BrandService implements BrandAbstraction {
 
 	public getAll(payload: IGetAllRequest): Promise<IGetAllResponse> {
 		return this.repo.getAll(payload);
+	}
+
+	public getAllWithNoPagination(
+		payload: IGetAllNoPaginationRequest,
+	): Promise<IGetAllNoPaginationResponse[]> {
+		return this.repo.getAllWithNoPagination(payload);
 	}
 
 	public getOne(payload: IGetOneRequest): Promise<IGetOneResponse> {

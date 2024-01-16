@@ -18,6 +18,7 @@ import {
 	StoragesTable,
 } from "../../../components";
 
+import { useAuth } from "../../../hooks";
 import { cep } from "../../../utils/regexs";
 import { formatField } from "../../../utils/formats";
 import plusIcon from "../../../assets/icons/plus.svg";
@@ -26,7 +27,6 @@ import { useDelayQuery } from "../../../hooks/useDelayQuery";
 import { AddStorageBtn, Container, ContainerHeader } from "./styles";
 import { FilterChangeIcon } from "../../../assets/icons/FilterChange";
 import { IFilteredParams, IStorage } from "../../../interfacers/storage";
-import { useAuth } from "../../../hooks";
 
 interface IStorages {}
 

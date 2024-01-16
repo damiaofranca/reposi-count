@@ -1,11 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { StyleSheetManager } from "styled-components";
 
 //icons
-import MinifyIcon from "../../assets/icons/minify-bar.svg";
 import LogoWhiteIcon from "../../assets/icons/logo-white.svg";
-import ExpandedIcon from "../../assets/icons/expanded-bar.svg";
 
 import {
 	Button,
@@ -17,20 +14,12 @@ import {
 
 import { useAuth, useTheme } from "../../hooks";
 
-import {
-	Logo,
-	NameUser,
-	LeftSide,
-	Container,
-	SwitchViewSideBar,
-} from "./styles";
+import { MenuLinks } from "../MenuLinks";
+import { Container, LeftSide, Logo, NameUser, RightSide } from "./styles";
 
-interface HeaderProps {
-	sideExpanded: boolean;
-	onExpanded: () => void;
-}
+interface HeaderProps {}
 
-export const Header: React.FC<HeaderProps> = ({ sideExpanded, onExpanded }) => {
+export const Header: React.FC<HeaderProps> = () => {
 	const { onSignOut } = useAuth();
 	const navigate = useNavigate();
 	const { theme, onChangeTheme } = useTheme();
@@ -46,15 +35,12 @@ export const Header: React.FC<HeaderProps> = ({ sideExpanded, onExpanded }) => {
 
 	return (
 		<Container className="bg-content4">
-			<Logo src={LogoWhiteIcon} alt="Client Vysor" />
-			<StyleSheetManager shouldForwardProp={(prop) => prop !== "imgurl"}>
-				<SwitchViewSideBar
-					onClick={onExpanded}
-					imgurl={sideExpanded ? ExpandedIcon : MinifyIcon}
-				/>
-			</StyleSheetManager>
-
 			<LeftSide>
+				<Logo src={LogoWhiteIcon} alt="Client Vysor" />
+				<MenuLinks />
+			</LeftSide>
+
+			<RightSide>
 				<Dropdown backdrop="blur">
 					<DropdownTrigger>
 						<Button variant="light" className="py-2">
@@ -78,7 +64,7 @@ export const Header: React.FC<HeaderProps> = ({ sideExpanded, onExpanded }) => {
 						</DropdownItem>
 					</DropdownMenu>
 				</Dropdown>
-			</LeftSide>
+			</RightSide>
 		</Container>
 	);
 };

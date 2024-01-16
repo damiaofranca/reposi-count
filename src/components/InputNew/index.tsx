@@ -24,7 +24,7 @@ export const InputNew: React.FC<InputProps> = ({ ...props }) => {
 						),
 				  }
 				: {})}
-			type={props.type === "password" && showPassword ? "password" : "text"}
+			type={props.type === "password" && showPassword ? "password" : props.type}
 			variant="bordered"
 		/>
 	);
