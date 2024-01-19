@@ -1,4 +1,4 @@
-import { FC, Key, memo, useMemo, useState } from "react";
+import { FC, Key, memo, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
 	Input,
@@ -22,7 +22,10 @@ import {
 
 import { formatField } from "../../../utils/formats";
 import plusIcon from "../../../assets/icons/plus.svg";
-import { ProductsTable } from "../../../components/productsTable";
+import {
+	IRefProductsTable,
+	ProductsTable,
+} from "../../../components/ProductsTable";
 import { useStorageDetail } from "../../../hooks/useStorageDetail";
 import { AddProduct, RegisterIcon, Title } from "../../../components";
 import { FilterChangeIcon } from "../../../assets/icons/FilterChange";
@@ -37,6 +40,7 @@ const filterOps = [
 ];
 
 export const StoreDetail: FC<IStoreDetail> = () => {
+	const tableProductRef = useRef<IRefProductsTable>(null);
 	const [showProductModal, setShowProductModal] = useState<boolean>(false);
 
 	const {
@@ -72,10 +76,15 @@ export const StoreDetail: FC<IStoreDetail> = () => {
 		navigate(`/${key}`);
 	};
 
+	const onRefetchQuerie = () => {
+		tableProductRef.current?.onRefetch();
+	};
+
 	const TableMemo = useMemo(
 		() =>
 			memo(() => (
 				<ProductsTable
+					ref={tableProductRef}
 					filter={{
 						storage: id || "",
 						page: currentMeta?.currentPage,
@@ -183,7 +192,11 @@ export const StoreDetail: FC<IStoreDetail> = () => {
 			)}
 
 			{id && showProductModal ? (
-				<AddProduct onClose={onCloseModalRegisterProduct} storage={id} />
+				<AddProduct
+					storage={id}
+					onSubmitFn={onRefetchQuerie}
+					onClose={onCloseModalRegisterProduct}
+				/>
 			) : (
 				<></>
 			)}

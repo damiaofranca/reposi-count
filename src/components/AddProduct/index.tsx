@@ -27,6 +27,7 @@ import { SelectBrandAutoComplete } from "../SelectBrandAutoComplete";
 interface IAddProduct {
 	storage: string;
 	onClose: () => void;
+	onSubmitFn: () => void;
 }
 
 const optsQuantity = ["KG", "UNI", "LTS", "LOTES"];
@@ -39,7 +40,11 @@ const initial_values: Omit<ICreateRequest, "storage"> = {
 	type_of_quantity: "LOTES",
 };
 
-export const AddProduct: React.FC<IAddProduct> = ({ storage, onClose }) => {
+export const AddProduct: React.FC<IAddProduct> = ({
+	storage,
+	onSubmitFn,
+	onClose,
+}) => {
 	const { theme } = useTheme();
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const [brandInputText, setBrandInputText] = React.useState<string>("");
@@ -51,7 +56,7 @@ export const AddProduct: React.FC<IAddProduct> = ({ storage, onClose }) => {
 				autoClose: 2000,
 				position: "top-right",
 			});
-			queryClient.invalidateQueries(`products`);
+			onSubmitFn();
 			setIsLoading(false);
 			onClose();
 			resetForm();
