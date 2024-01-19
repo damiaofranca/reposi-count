@@ -6,6 +6,8 @@ import { IGetOneResponse } from "./response/IGetOne";
 import { IGetAllResponse } from "./response/IGetAll";
 import { IUpdateResponse } from "./response/IUpdate";
 import { IDeleteResponse } from "./response/IDelete";
+import { ITransferRequest } from "./request/ITransfer";
+import { ITransferResponse } from "./response/ITransfer";
 import { IFilteredParams, IGetAllRequest } from "./request/IGetAll";
 import { IDataUpdateRequest, IUpdateRequest } from "./request/IUpdate";
 
@@ -35,5 +37,7 @@ export type {
 	ICreateResponse,
 	IDeleteResponse,
 	IFilteredParams,
+	ITransferRequest,
+	ITransferResponse,
 	IDataUpdateRequest,
 };

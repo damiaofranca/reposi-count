@@ -10,6 +10,7 @@ import {
 	IDeleteRequest,
 	IGetAllResponse,
 	IGetOneResponse,
+	ITransferRequest,
 } from "../../../interfacers/product";
 
 export class ApiRepository implements ProductAbstraction {
@@ -35,5 +36,9 @@ export class ApiRepository implements ProductAbstraction {
 
 	public delete(_payload: IDeleteRequest): Promise<void> {
 		return this._api.delete(`/products/${_payload.id}`);
+	}
+
+	public transfer(_payload: ITransferRequest): Promise<void> {
+		return this._api.post(`/products/transfer`, _payload);
 	}
 }

@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect } from "react";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
 import {
 	Table,
 	Tooltip,
@@ -9,17 +9,19 @@ import {
 	TableHeader,
 } from "@nextui-org/react";
 
-import { useGetAllProduct } from "../../api/products";
-import { EditIcon } from "../../assets/icons/Edit";
-import { Meta } from "../../interfacers/common/iBaseList";
 import { IProduct } from "../../interfacers/product";
+import { TransferProduct } from "../TransferProduct";
 import { columnsProducts } from "../../utils/tables";
+import { useGetAllProduct } from "../../api/products";
+import { Meta } from "../../interfacers/common/iBaseList";
+import { TransferIcon } from "../../assets/icons/Transfer";
 
 interface IProductsTable {
 	filter: {
 		page?: number;
 		name?: string;
 		brand?: string;
+		storage: string;
 		date_selected?: string;
 		type_of_product?: string;
 	};
@@ -30,12 +32,12 @@ interface IProductsTable {
 interface IColumnProduct
 	extends Pick<
 		IProduct,
+		| "id"
 		| "name"
+		| "brand"
 		| "quantity"
 		| "type_of_product"
 		| "type_of_quantity"
-		| "brand"
-		| "id"
 	> {
 	actions?: string;
 }
@@ -54,11 +56,16 @@ export const ProductsTable: FC<IProductsTable> = ({
 	metaPage,
 	onLoading,
 }) => {
-	// const confirmModalRef = useRef<any>(null);
-	// const [productSelected, setProductSelected] = useState<IProduct | null>(null);
-	const { data, isLoading } = useGetAllProduct({
+	const [productSelected, setProductSelected] = useState<{
+		id: string;
+		name: string;
+		quantity: string;
+	} | null>(null);
+	const confirmModalRef = useRef<any>(null);
+	const { data, isLoading, refetch } = useGetAllProduct({
 		filters: {
 			limit: 10,
+			storage: filter.storage,
 			...(filter.page ? { page: filter.page } : {}),
 			...(filter.name ? { name: filter.name } : {}),
 			...(filter.brand ? { brand: filter.brand } : {}),
@@ -68,20 +75,15 @@ export const ProductsTable: FC<IProductsTable> = ({
 				: {}),
 		},
 	});
-	// const { mutateAsync: onDelete } = useDeleteProduct({
-	// 	onSuccess: () => {
-	// 		toast.success("Produto deletado com sucesso.", { autoClose: 700 });
-	// 		queryClient.invalidateQueries("products");
-	// 	},
-	// });
 
-	// const onDeleteProductFn = async () => {
-	// 	if (productSelected) {
-	// 		try {
-	// 			await onDelete({ id: productSelected.id });
-	// 		} catch {}
-	// 	}
-	// };
+	const onTransferProduct = (product: {
+		id: string;
+		name: string;
+		quantity: string;
+	}) => {
+		setProductSelected(product);
+		confirmModalRef?.current?.onOpen();
+	};
 
 	const renderCell = useCallback((product: any, columnKey: ColumnKey) => {
 		const cellValue = product[columnKey];
@@ -120,9 +122,18 @@ export const ProductsTable: FC<IProductsTable> = ({
 			case columnKey === "actions":
 				return (
 					<div className="relative flex items-center gap-2 justify-end">
-						<Tooltip content="Transferência para envio">
-							<span className="text-lg text-default-400 cursor-pointer rounded-full p-2 bg-gray-200 dark:bg-zinc-600 active:opacity-50">
-								<EditIcon />
+						<Tooltip content="Transferência produto">
+							<span
+								className="text-lg text-default-400 cursor-pointer rounded-full p-2 bg-gray-200 dark:bg-zinc-600 active:opacity-50"
+								onClick={() =>
+									onTransferProduct({
+										id: product.id,
+										name: product.name,
+										quantity: product.quantity,
+									})
+								}
+							>
+								<TransferIcon />
 							</span>
 						</Tooltip>
 					</div>
@@ -173,21 +184,16 @@ export const ProductsTable: FC<IProductsTable> = ({
 				<></>
 			)}
 
-			{/* <ConfirmModal
-				submitText="Remover"
-				submitColor="danger"
-				ref={confirmModalRef}
-				submitFn={onDeleteProductFn}
-				content={
-					<span className="text-sm text-default-400">
-						Têm certeza que deseja remover essa marca ?
-					</span>
-				}
-			>
-				<span className="text-lg text-danger cursor-pointer rounded-full p-2 bg-gray-200 dark:bg-zinc-600 active:opacity-50">
-					<DeleteIcon />
-				</span>
-			</ConfirmModal> */}
+			{productSelected ? (
+				<TransferProduct
+					storage={filter.storage}
+					product={productSelected}
+					submitFn={() => refetch()}
+					onClose={() => setProductSelected(null)}
+				/>
+			) : (
+				<></>
+			)}
 		</>
 	);
 };

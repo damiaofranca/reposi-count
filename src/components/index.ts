@@ -19,6 +19,7 @@ export * from "./ProtectedPage";
 export * from "./CardDashboard";
 export * from "./RankingCities";
 export * from "./WatchDimentions";
+export * from "./TransferProduct";
 export * from "../assets/icons/ArrowLeft";
 export * from "../assets/icons/GoogleIcon";
 export * from "../assets/icons/EyeFilledIcon";

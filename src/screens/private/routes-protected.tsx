@@ -5,8 +5,10 @@ import { Brands } from "./Brands";
 import { Account } from "./Account";
 import { Storages } from "./Storage";
 import { InitialPage } from "./InitialPage";
-import { DeleteAccount } from "./DeleteAccount";
 import { StoreDetail } from "./StoreDetail";
+import { DeleteAccount } from "./DeleteAccount";
+import { StorageProvider } from "../../providers/Storage";
+import { StorageDetailProvider } from "../../providers/StorageDetail";
 
 export const ROUTES_PAGES: RouteObject[] = [
 	{
@@ -19,11 +21,29 @@ export const ROUTES_PAGES: RouteObject[] = [
 	},
 	{
 		path: "/storages",
-		element: <ProtectedPage element={Storages} validadePage={true} />,
+		element: (
+			<ProtectedPage
+				element={() => (
+					<StorageProvider>
+						<Storages />
+					</StorageProvider>
+				)}
+				validadePage={true}
+			/>
+		),
 	},
 	{
 		path: "/storages/:id",
-		element: <ProtectedPage element={StoreDetail} validadePage={true} />,
+		element: (
+			<ProtectedPage
+				element={() => (
+					<StorageDetailProvider>
+						<StoreDetail />
+					</StorageDetailProvider>
+				)}
+				validadePage={true}
+			/>
+		),
 	},
 	{
 		path: "/account",

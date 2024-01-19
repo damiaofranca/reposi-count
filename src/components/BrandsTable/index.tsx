@@ -51,6 +51,7 @@ export const BrandsTable: FC<IBrandsTable> = ({
 	const { data, isLoading } = useGetAllBrand({
 		filters: {
 			limit: 10,
+			no_pagination: false,
 			...(filter.name ? { name: filter.name } : {}),
 			...(filter.cnpj ? { cnpj: filter.cnpj } : {}),
 			...(filter.page ? { page: filter.page } : {}),
@@ -171,6 +172,7 @@ export const BrandsTable: FC<IBrandsTable> = ({
 			<ConfirmModal
 				submitText="Remover"
 				submitColor="danger"
+				title="Remover Marca"
 				ref={confirmModalRef}
 				submitFn={onDeleteBrandFn}
 				content={
@@ -178,11 +180,7 @@ export const BrandsTable: FC<IBrandsTable> = ({
 						Têm certeza que deseja remover essa marca ?
 					</span>
 				}
-			>
-				<span className="text-lg text-danger cursor-pointer rounded-full p-2 bg-gray-200 dark:bg-zinc-600 active:opacity-50">
-					<DeleteIcon />
-				</span>
-			</ConfirmModal>
+			/>
 		</>
 	);
 };

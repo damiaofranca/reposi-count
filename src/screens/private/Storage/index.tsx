@@ -1,13 +1,13 @@
 import React, { FC, memo, useMemo } from "react";
 import {
+	Input,
 	Button,
+	Spinner,
 	Dropdown,
+	Pagination,
 	DropdownItem,
 	DropdownMenu,
 	DropdownTrigger,
-	Input,
-	Pagination,
-	Spinner,
 } from "@nextui-org/react";
 
 import {
@@ -19,14 +19,11 @@ import {
 } from "../../../components";
 
 import { useAuth } from "../../../hooks";
-import { cep } from "../../../utils/regexs";
 import { formatField } from "../../../utils/formats";
 import plusIcon from "../../../assets/icons/plus.svg";
-import { Meta } from "../../../interfacers/common/iBaseList";
-import { useDelayQuery } from "../../../hooks/useDelayQuery";
+import { useStorage } from "../../../hooks/useStorage";
 import { AddStorageBtn, Container, ContainerHeader } from "./styles";
 import { FilterChangeIcon } from "../../../assets/icons/FilterChange";
-import { IFilteredParams, IStorage } from "../../../interfacers/storage";
 
 interface IStorages {}
 
@@ -42,77 +39,32 @@ const filterOps = [
 
 export const Storages: FC<IStorages> = () => {
 	const { profile_data } = useAuth();
+
+	const {
+		isLoading,
+		searchType,
+		currentMeta,
+		searchInput,
+		invalidFilter,
+		storageToEdit,
+		debounceValue,
+
+		onLoad,
+		onSearch,
+		onSetMeta,
+		onChangePage,
+		onUpdateToEdit,
+		onChangeFilter,
+	} = useStorage();
+
 	const [showModalAddStorage, setShowModalAddStorage] =
 		React.useState<boolean>(false);
-	const [isLoading, setIsLoading] = React.useState<boolean>(false);
-	const [searchInput, setSearchInput] = React.useState<string>("");
-	const [invalidFilter, setInvalidFilter] = React.useState<boolean>(false);
-	const [searchType, setSearchType] = React.useState<IFilteredParams>({
-		search: "",
-		value: "identifier",
-		label: "Identificação",
-	});
-	const debounceValue = useDelayQuery({ delay: 800, query: searchType.search });
-	const [currentMeta, setCurrentMeta] = React.useState<Meta | undefined>(
-		undefined,
-	);
-	const [storageToEdit, setStorageToEdit] = React.useState<
-		IStorage | undefined
-	>(undefined);
+
+	const onCloseUpdateModal = () => onUpdateToEdit(null);
 
 	const onShowStorageModal = () => setShowModalAddStorage(true);
 
 	const onCloseStorageModal = () => setShowModalAddStorage(false);
-
-	const onUpdateToEdit = (val: IStorage) => setStorageToEdit(val);
-
-	const onCloseUpdateModal = () => setStorageToEdit(undefined);
-
-	const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const inputValue = e.target.value;
-		setSearchInput(inputValue);
-		if (searchType.value === "cep") {
-			if (cep.test(inputValue)) {
-				setSearchType((_searchInput) => ({
-					..._searchInput,
-					search: inputValue,
-				}));
-				setInvalidFilter(false);
-			} else {
-				setInvalidFilter(true);
-
-				if (inputValue.length === 0) {
-					setInvalidFilter(false);
-					setSearchType((_searchInput) => ({ ..._searchInput, search: "" }));
-				}
-			}
-		} else {
-			setSearchType((_searchInput) => ({
-				..._searchInput,
-				search: inputValue,
-			}));
-		}
-	};
-
-	const onChangePage = (page: number) => {
-		setCurrentMeta((val) =>
-			val
-				? ({
-						...val,
-						currentPage: page,
-				  } as Meta)
-				: undefined,
-		);
-	};
-
-	const onChangeFilter = (_filter: { label: string; value: string }) => {
-		setSearchType(() => ({
-			search: ``,
-			value: _filter.value as any,
-			label: _filter.label as any,
-		}));
-		setSearchInput("");
-	};
 
 	const TableMemo = useMemo(
 		() =>
@@ -123,8 +75,8 @@ export const Storages: FC<IStorages> = () => {
 						[searchType.value]: debounceValue,
 						page: currentMeta?.currentPage,
 					}}
-					onLoading={(val) => setIsLoading(val)}
-					metaPage={(val) => setCurrentMeta(val)}
+					onLoading={(val) => onLoad(val)}
+					metaPage={(val) => onSetMeta(val)}
 				/>
 			)),
 		[debounceValue],

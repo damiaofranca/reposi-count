@@ -12,6 +12,7 @@ import {
 	BreadcrumbItem,
 	DropdownTrigger,
 } from "@nextui-org/react";
+
 import {
 	Container,
 	AddProductBtn,
@@ -19,14 +20,10 @@ import {
 	ContainerHeader,
 } from "./styles";
 
-import { validDate } from "../../../utils/regexs";
 import { formatField } from "../../../utils/formats";
 import plusIcon from "../../../assets/icons/plus.svg";
-import { useGetOneStorage } from "../../../api/storages";
-import { Meta } from "../../../interfacers/common/iBaseList";
-import { useDelayQuery } from "../../../hooks/useDelayQuery";
-import { IFilteredParams } from "../../../interfacers/product";
 import { ProductsTable } from "../../../components/productsTable";
+import { useStorageDetail } from "../../../hooks/useStorageDetail";
 import { AddProduct, RegisterIcon, Title } from "../../../components";
 import { FilterChangeIcon } from "../../../assets/icons/FilterChange";
 
@@ -40,20 +37,28 @@ const filterOps = [
 ];
 
 export const StoreDetail: FC<IStoreDetail> = () => {
-	const { id } = useParams();
-	const navigate = useNavigate();
-	const [searchInput, setSearchInput] = useState<string>("");
-	const [isLoadingData, setLoadingData] = useState<boolean>(false);
-	const [invalidFilter, setInvalidFilter] = useState<boolean>(false);
-	const { isLoading, data: storage } = useGetOneStorage({ id: id || "" });
 	const [showProductModal, setShowProductModal] = useState<boolean>(false);
-	const [currentMeta, setCurrentMeta] = useState<Meta | undefined>(undefined);
-	const [searchType, setSearchType] = useState<IFilteredParams>({
-		search: "",
-		value: "name",
-		label: "Nome",
-	});
-	const debounceValue = useDelayQuery({ delay: 800, query: searchType.search });
+
+	const {
+		storage,
+		isLoading,
+		searchType,
+		searchInput,
+		currentMeta,
+		isLoadingData,
+		invalidFilter,
+		debounceValue,
+
+		onSearch,
+		onSetMeta,
+		onLoadData,
+		onChangePage,
+		onChangeFilter,
+	} = useStorageDetail();
+
+	const { id } = useParams();
+
+	const navigate = useNavigate();
 
 	const onCloseModalRegisterProduct = () => {
 		setShowProductModal(false);
@@ -67,66 +72,17 @@ export const StoreDetail: FC<IStoreDetail> = () => {
 		navigate(`/${key}`);
 	};
 
-	const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const inputValue = e.target.value;
-		setSearchInput(inputValue);
-
-		if (searchType.value === "date_selected") {
-			if (validDate.test(inputValue)) {
-				setSearchType((_searchInput) => ({
-					..._searchInput,
-					search: inputValue,
-				}));
-				if (!(invalidFilter === false)) {
-					setInvalidFilter(false);
-				}
-			} else {
-				if (!(invalidFilter === true)) {
-					setInvalidFilter(true);
-				}
-				if (inputValue.length === 0) {
-					setInvalidFilter(false);
-					setSearchType((_searchInput) => ({ ..._searchInput, search: "" }));
-				}
-			}
-		} else {
-			setSearchType((_searchInput) => ({
-				..._searchInput,
-				search: inputValue,
-			}));
-		}
-	};
-
-	const onChangePage = (page: number) => {
-		setCurrentMeta((val) =>
-			val
-				? ({
-						...val,
-						currentPage: page,
-				  } as Meta)
-				: undefined,
-		);
-	};
-
-	const onChangeFilter = (_filter: { label: string; value: string }) => {
-		setSearchType(() => ({
-			search: "",
-			value: _filter.value as any,
-			label: _filter.label as any,
-		}));
-		setSearchInput("");
-	};
-
 	const TableMemo = useMemo(
 		() =>
 			memo(() => (
 				<ProductsTable
 					filter={{
-						[searchType.value]: debounceValue,
+						storage: id || "",
 						page: currentMeta?.currentPage,
+						[searchType.value]: debounceValue,
 					}}
-					metaPage={(val) => setCurrentMeta(val)}
-					onLoading={(val) => setLoadingData(val)}
+					metaPage={(val) => onSetMeta(val)}
+					onLoading={(val) => onLoadData(val)}
 				/>
 			)),
 		[debounceValue],

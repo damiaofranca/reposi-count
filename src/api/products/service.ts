@@ -6,6 +6,7 @@ import {
 	IGetOneRequest,
 	IGetAllResponse,
 	IGetOneResponse,
+	ITransferRequest,
 } from "../../interfacers/product";
 import { ProductAbstraction } from "./abstraction";
 
@@ -30,5 +31,9 @@ export class ProductService implements ProductAbstraction {
 
 	public delete(payload: IDeleteRequest): Promise<void> {
 		return this.repo.delete(payload);
+	}
+
+	public transfer(payload: ITransferRequest): Promise<void> {
+		return this.repo.transfer(payload);
 	}
 }

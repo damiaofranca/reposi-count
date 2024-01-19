@@ -4,6 +4,7 @@ export interface IGetAllRequest {
 		page?: number;
 		limit?: number;
 		brand?: string;
+		storage: string;
 		date_selected?: string;
 		type_of_product?: string;
 	};

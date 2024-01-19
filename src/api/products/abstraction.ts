@@ -6,6 +6,7 @@ import {
 	IDeleteRequest,
 	IGetAllResponse,
 	IGetOneResponse,
+	ITransferRequest,
 } from "../../interfacers/product";
 
 export abstract class ProductAbstraction {
@@ -18,4 +19,6 @@ export abstract class ProductAbstraction {
 	public abstract update(payload: IUpdateRequest): Promise<void>;
 
 	public abstract delete(payload: IDeleteRequest): Promise<void>;
+
+	public abstract transfer(payload: ITransferRequest): Promise<void>;
 }

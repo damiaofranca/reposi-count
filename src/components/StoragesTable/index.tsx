@@ -228,6 +228,7 @@ export const StoragesTable: FC<IStoragesTable> = ({
 				submitText="Remover"
 				submitColor="danger"
 				ref={confirmModalRef}
+				title={"Remover Estoque"}
 				submitFn={onDeleteStorageFn}
 				content={
 					<span className="text-sm text-default-400">

@@ -19,6 +19,7 @@ import { useTheme } from "../../hooks";
 
 interface IConfirmModal {
 	submitFn: (values?: any) => void;
+	title: string;
 	content: ReactNode;
 	submitText: string;
 	submitColor:
@@ -35,7 +36,7 @@ export const ConfirmModal = forwardRef<
 	InternalForwardRefRenderFunction<"div", ModalProps, never>,
 	PropsWithChildren<IConfirmModal>
 >(function (
-	{ content, submitFn, submitText, submitColor }: IConfirmModal,
+	{ content, submitFn, title, submitText, submitColor }: IConfirmModal,
 	_ref: any,
 ) {
 	const { theme } = useTheme();
@@ -67,9 +68,7 @@ export const ConfirmModal = forwardRef<
 			<ModalContent className={theme === "dark" ? "bg-[#313131]" : ""}>
 				{(onClose) => (
 					<>
-						<ModalHeader className="flex flex-col gap-1">
-							Modal Title
-						</ModalHeader>
+						<ModalHeader className="flex flex-col gap-1">{title}</ModalHeader>
 						<ModalBody>{content}</ModalBody>
 						<ModalFooter>
 							<Button
