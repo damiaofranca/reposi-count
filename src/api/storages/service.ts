@@ -6,6 +6,8 @@ import {
 	IGetOneRequest,
 	IGetAllResponse,
 	IGetOneResponse,
+	IDashboardRequest,
+	IDashboardResponse,
 } from "../../interfacers/storage";
 import { StorageAbstraction } from "./abstraction";
 
@@ -30,5 +32,9 @@ export class StorageService implements StorageAbstraction {
 
 	public delete(payload: IDeleteRequest): Promise<void> {
 		return this.repo.delete(payload);
+	}
+
+	public dashboard(payload: IDashboardRequest): Promise<IDashboardResponse> {
+		return this.repo.dashboard(payload);
 	}
 }

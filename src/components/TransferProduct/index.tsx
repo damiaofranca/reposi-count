@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
-import { FC, Key, memo, useEffect, useMemo, useState } from "react";
+import { FC, Key, useEffect, useState } from "react";
 
 import {
 	Modal,
@@ -39,7 +39,7 @@ export const TransferProduct: FC<ITransferProduct> = ({
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [storageInputText, setBrandInputText] = useState<string>("");
 	const debouncedStorages = useDelayQuery({
-		delay: 600,
+		delay: 800,
 		query: storageInputText,
 	});
 
@@ -131,23 +131,6 @@ export const TransferProduct: FC<ITransferProduct> = ({
 		validateForm();
 	}, []);
 
-	const SelectProducts = useMemo(
-		() =>
-			memo(() => (
-				<SelectStorageAutoComplete
-					label="Estoque"
-					storage={storage}
-					variant="bordered"
-					onBlur={handleBlur}
-					valueSearch={debouncedStorages}
-					onInputChange={onSetProductText}
-					onSelectionChange={onSetProduct}
-					placeholder="Selecionar estoque"
-				/>
-			)),
-		[debouncedStorages],
-	);
-
 	return (
 		<Modal isOpen={true} placement={"center"} onOpenChange={onClose}>
 			<ModalContent className={theme === "dark" ? "bg-[#313131]" : ""}>
@@ -163,7 +146,16 @@ export const TransferProduct: FC<ITransferProduct> = ({
 						<ModalBody>
 							<Form onSubmit={handleSubmit}>
 								<FormItem>
-									<SelectProducts />
+									<SelectStorageAutoComplete
+										label="Estoque"
+										storage={storage}
+										variant="bordered"
+										onBlur={handleBlur}
+										valueSearch={debouncedStorages}
+										onInputChange={onSetProductText}
+										onSelectionChange={onSetProduct}
+										placeholder="Selecionar estoque"
+									/>
 								</FormItem>
 								<FormItem>
 									<InputNew

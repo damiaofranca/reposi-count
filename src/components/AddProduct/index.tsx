@@ -1,22 +1,21 @@
-import React, { Key, memo, useMemo } from "react";
+import React, { Key } from "react";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 
 import {
 	Modal,
 	Button,
+	Select,
 	Spinner,
 	ModalBody,
+	SelectItem,
 	ModalFooter,
 	ModalHeader,
 	ModalContent,
-	Select,
-	SelectItem,
 } from "@nextui-org/react";
 
 import { useTheme } from "../../hooks";
 import { InputNew } from "../InputNew";
-import { queryClient } from "../../api";
 import { Form, FormItem } from "./styles";
 import RegisterProductSchema from "./schema";
 import { useCreateProduct } from "../../api/products";
@@ -48,7 +47,7 @@ export const AddProduct: React.FC<IAddProduct> = ({
 	const { theme } = useTheme();
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const [brandInputText, setBrandInputText] = React.useState<string>("");
-	const debouncedBrands = useDelayQuery({ delay: 600, query: brandInputText });
+	const debouncedBrands = useDelayQuery({ delay: 800, query: brandInputText });
 
 	const { mutateAsync } = useCreateProduct({
 		onSuccess: () => {
@@ -123,22 +122,6 @@ export const AddProduct: React.FC<IAddProduct> = ({
 		validateForm();
 	}, []);
 
-	const SelectBrandMemo = useMemo(
-		() =>
-			memo(() => (
-				<SelectBrandAutoComplete
-					variant="bordered"
-					onBlur={handleBlur}
-					label="Marca do produto"
-					valueSearch={debouncedBrands}
-					onInputChange={onSetBrandText}
-					onSelectionChange={onSetBrand}
-					placeholder="Selecionar marca do produto"
-				/>
-			)),
-		[debouncedBrands],
-	);
-
 	return (
 		<Modal isOpen={true} placement={"center"} onOpenChange={onClose}>
 			<ModalContent className={theme === "dark" ? "bg-[#313131]" : ""}>
@@ -169,7 +152,19 @@ export const AddProduct: React.FC<IAddProduct> = ({
 									/>
 								</FormItem>
 								<FormItem>
-									<SelectBrandMemo />
+									<SelectBrandAutoComplete
+										variant="bordered"
+										onBlur={handleBlur}
+										value={values.brand}
+										label="Marca do produto"
+										valueSearch={debouncedBrands}
+										onInputChange={(e) => {
+											onSetBrandText(e);
+											console.log(e);
+										}}
+										onSelectionChange={onSetBrand}
+										placeholder="Selecionar marca do produto"
+									/>
 								</FormItem>
 								<FormItem>
 									<InputNew

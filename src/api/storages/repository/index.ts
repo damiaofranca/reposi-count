@@ -10,6 +10,8 @@ import {
 	IGetOneResponse,
 	IUpdateRequest,
 	IDeleteRequest,
+	IDashboardResponse,
+	IDashboardRequest,
 } from "../../../interfacers/storage";
 
 export class ApiRepository implements StorageAbstraction {
@@ -21,12 +23,14 @@ export class ApiRepository implements StorageAbstraction {
 
 	public async getAll(_payload: IGetAllRequest): Promise<IGetAllResponse> {
 		return await this._api
-			.get("/storages", { params: _payload.filters })
+			.get<IGetAllResponse>("/storages", { params: _payload.filters })
 			.then((val) => val.data);
 	}
 
 	public getOne(_payload: IGetOneRequest): Promise<IGetOneResponse> {
-		return this._api.get(`/storages/${_payload.id}`).then((val) => val.data);
+		return this._api
+			.get<IGetOneResponse>(`/storages/${_payload.id}`)
+			.then((val) => val.data);
 	}
 
 	public update(_payload: IUpdateRequest): Promise<void> {
@@ -35,5 +39,13 @@ export class ApiRepository implements StorageAbstraction {
 
 	public delete(_payload: IDeleteRequest): Promise<void> {
 		return this._api.delete(`/storages/${_payload.id}`);
+	}
+
+	public async dashboard(
+		_payload: IDashboardRequest,
+	): Promise<IDashboardResponse> {
+		return await this._api
+			.get<IDashboardResponse>("/storages/dashboard", { params: _payload })
+			.then((val) => val.data);
 	}
 }

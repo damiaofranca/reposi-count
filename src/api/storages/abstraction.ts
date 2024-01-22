@@ -6,6 +6,8 @@ import {
 	IGetOneResponse,
 	IUpdateRequest,
 	IDeleteRequest,
+	IDashboardResponse,
+	IDashboardRequest,
 } from "../../interfacers/storage";
 
 export abstract class StorageAbstraction {
@@ -18,4 +20,8 @@ export abstract class StorageAbstraction {
 	public abstract update(payload: IUpdateRequest): Promise<void>;
 
 	public abstract delete(payload: IDeleteRequest): Promise<void>;
+
+	public abstract dashboard(
+		payload: IDashboardRequest,
+	): Promise<IDashboardResponse>;
 }
