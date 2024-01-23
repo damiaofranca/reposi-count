@@ -3,21 +3,15 @@ import styled from "styled-components";
 export const Container = styled.div`
 	width: 100%;
 	display: flex;
-	max-width: 25%;
-	margin-left: 24px;
+	padding: 24px;
+	height: fit-content;
 	border-radius: 12px;
 	align-items: center;
 	flex-direction: column;
-	padding: 40px 40px 12px 40px;
-
-	@media screen and (max-width: 1840px) {
-		padding: 24px 24px 12px 24px;
-	}
 
 	@media screen and (max-width: 1280px) {
 		order: -1;
 		max-width: 100%;
-		margin-left: 0px;
 		margin-bottom: 24px;
 	}
 `;
@@ -28,14 +22,15 @@ export const Title = styled.h1`
 	font-weight: 600;
 	line-height: 36px;
 	font-style: normal;
-	margin-bottom: 53px;
+	margin-bottom: 24px;
 `;
 
 export const ContainerList = styled.div`
 	width: 100%;
 	display: flex;
-	height: 100%;
 	overflow-y: auto;
+	min-height: 420px;
+	max-height: 420px;
 	flex-direction: column;
 `;
 
@@ -63,14 +58,13 @@ export const LabelList = styled.label`
 	font-style: normal;
 `;
 
-export const NoRegisteredStores = styled.div`
+export const NoRegisteredOutputs = styled.div`
 	width: 100%;
 	padding: 10px;
 	display: flex;
+	border-radius: 6px;
 	align-items: center;
 	justify-content: center;
-	background-color: #2382a0;
-	border-radius: 6px;
 
 	color: #e2eaed;
 	font-size: 14px;
@@ -78,4 +72,9 @@ export const NoRegisteredStores = styled.div`
 	line-height: 21px;
 	font-style: normal;
 	text-align: center;
+`;
+
+export const ContainerFilter = styled.div`
+	width: 100%;
+	margin-bottom: 12px;
 `;

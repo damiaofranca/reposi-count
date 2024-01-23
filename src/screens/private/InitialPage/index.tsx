@@ -1,57 +1,96 @@
-import { useTheme } from "../../../hooks";
-import { RankingCities, Graphic, CardDashboard } from "../../../components";
+import { useDashboardData } from "../../../api/storages";
+import { FilterChangeIcon } from "../../../assets/icons/FilterChange";
+import {
+	Title,
+	CardDashboard,
+	RecentOutputs,
+	RankingTopFive,
+	QuantityByBrands,
+	Graphic,
+	ItemsWithLowStock,
+} from "../../../components";
+import {
+	Center,
+	Container,
+	WrapperCards,
+	ContainerHeader,
+	WrapperGraphics,
+} from "./styles";
+import { Button, Spinner } from "@nextui-org/react";
+import { StyleSheetManager } from "styled-components";
+import { useTransactionHistoric } from "../../../api/storages/hooks/TransactionHistoric";
 
-import ChipIcon from "../../../assets/icons/Chip";
-import BuildIcon from "../../../assets/icons/Build";
-import PeopleIcon from "../../../assets/icons/People";
-import MapDashboardIcon from "../../../assets/icons/MapDashboardIcon";
-
-import { Container, WrapperCards, WrapperGraphics } from "./styles";
-
-interface InitialPageProps {}
+export interface InitialPageProps {}
 
 export const InitialPage: React.FC<InitialPageProps> = () => {
-	const { theme } = useTheme();
+	const { data, isLoading } = useDashboardData({});
+	const { data: dataTransaction, isLoading: isLoadingTransaction } =
+		useTransactionHistoric({});
+
 	return (
 		<Container>
-			<WrapperCards>
-				<CardDashboard
-					value="+45mil"
-					metric="growth"
-					valueMetric={10}
-					icon={<PeopleIcon theme={theme} />}
-					subtitle="Crescimento"
-					title="Total de clientes"
-				/>
-				<CardDashboard
-					metric="middle"
-					valueMetric={10}
-					subtitle="Constância"
-					icon={<MapDashboardIcon theme={theme} />}
-					title="Total de cidades"
-					value={`1000`}
-				/>
-				<CardDashboard
-					value="+45mil"
-					metric="growth"
-					icon={<ChipIcon theme={theme} />}
-					valueMetric={10}
-					subtitle="Crescimento"
-					title="Total de assinaturas"
-				/>
-				<CardDashboard
-					metric="down"
-					valueMetric={28}
-					icon={<BuildIcon theme={theme} />}
-					subtitle="Declinação"
-					title="Total de lojas"
-					value={`11000`}
-				/>
-			</WrapperCards>
-			<WrapperGraphics>
-				<Graphic />
-				<RankingCities />
-			</WrapperGraphics>
+			<ContainerHeader>
+				<Title className="text-content2">Dashboard</Title>
+
+				<Button
+					color="primary"
+					variant="shadow"
+					endContent={<FilterChangeIcon />}
+				>
+					Filtros
+				</Button>
+			</ContainerHeader>
+			{!isLoading && data ? (
+				<>
+					<StyleSheetManager
+						shouldForwardProp={(prop) => prop !== "totalTypeUnit"}
+					>
+						<WrapperCards
+							totalTypeUnit={data.productsCountByQuantityType.length || 0}
+						>
+							<CardDashboard
+								title="Total De Produtos"
+								value={`${data.totalProductCount ? data.totalProductCount : 0}`}
+							/>
+							<CardDashboard
+								title="Total De Estoques"
+								value={`${
+									data.totalStoragesCount ? data.totalStoragesCount : 0
+								}`}
+							/>
+
+							{data.productsCountByQuantityType.map((productByType, idx) => (
+								<CardDashboard
+									key={idx}
+									title={`Total de ${productByType.quantity_type}`}
+									value={`${
+										productByType.product_count
+											? productByType.product_count
+											: 0
+									}`}
+								/>
+							))}
+						</WrapperCards>
+					</StyleSheetManager>
+					{dataTransaction && !isLoadingTransaction ? (
+						<Graphic data={dataTransaction} />
+					) : (
+						<Center>
+							<Spinner color="primary" label="Carregando..." />
+						</Center>
+					)}
+					<WrapperGraphics>
+						<RankingTopFive storages={data.topFiveStorages || []} />
+						<QuantityByBrands brands={data.quantitiesByBrand || []} />
+						<ItemsWithLowStock products={data.itemsWithLowStock || []} />
+						<RecentOutputs entries={data.recentEntriesExits || []} />
+					</WrapperGraphics>
+				</>
+			) : (
+				<Center>
+					<Spinner color="primary" label="Carregando..." />
+				</Center>
+			)}
 		</Container>
 	);
 };

@@ -12,6 +12,7 @@ import {
 	IDeleteRequest,
 	IDashboardResponse,
 	IDashboardRequest,
+	ITransitionResponse,
 } from "../../../interfacers/storage";
 
 export class ApiRepository implements StorageAbstraction {
@@ -42,10 +43,18 @@ export class ApiRepository implements StorageAbstraction {
 	}
 
 	public async dashboard(
-		_payload: IDashboardRequest,
+		payload: IDashboardRequest,
 	): Promise<IDashboardResponse> {
 		return await this._api
-			.get<IDashboardResponse>("/storages/dashboard", { params: _payload })
+			.get<IDashboardResponse>("/storages/dashboard", { params: payload })
+			.then((val) => val.data);
+	}
+
+	public async transactionHistoric(
+		payload: IDashboardRequest,
+	): Promise<ITransitionResponse[]> {
+		return await this._api
+			.get<ITransitionResponse[]>("/transfers/historic", { params: payload })
 			.then((val) => val.data);
 	}
 }

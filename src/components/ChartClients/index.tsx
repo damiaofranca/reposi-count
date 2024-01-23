@@ -43,7 +43,7 @@ const ChartClients: React.FC<IChartClients> = ({ viewDate, series }) => {
 					},
 				},
 				title: {
-					text: "Total de clientes",
+					text: "Total de transações",
 					style: {
 						color: theme === "light" ? "#739072" : "#ffff",
 					},

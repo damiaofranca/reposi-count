@@ -10,6 +10,7 @@ import { IDashboardRequest } from "./request/IDashboard";
 import { IDashboardResponse } from "./response/IDashboard";
 import { IFilteredParams, IGetAllRequest } from "./request/IGetAll";
 import { IDataUpdateRequest, IUpdateRequest } from "./request/IUpdate";
+import { ITransitionResponse } from "./response/ITransitions";
 
 export interface IStorage {
 	id: string;
@@ -39,4 +40,5 @@ export type {
 	IDashboardRequest,
 	IDataUpdateRequest,
 	IDashboardResponse,
+	ITransitionResponse,
 };

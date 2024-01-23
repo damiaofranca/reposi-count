@@ -8,6 +8,7 @@ import {
 	IDeleteRequest,
 	IDashboardResponse,
 	IDashboardRequest,
+	ITransitionResponse,
 } from "../../interfacers/storage";
 
 export abstract class StorageAbstraction {
@@ -24,4 +25,8 @@ export abstract class StorageAbstraction {
 	public abstract dashboard(
 		payload: IDashboardRequest,
 	): Promise<IDashboardResponse>;
+
+	public abstract transactionHistoric(
+		payload: IDashboardRequest,
+	): Promise<ITransitionResponse[]>;
 }

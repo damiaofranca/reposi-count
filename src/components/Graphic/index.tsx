@@ -1,19 +1,41 @@
 import React from "react";
-import clientsData from "./data";
 import ChartClients from "../ChartClients";
-
 import { Container, ContainerChart, Header, Title } from "./styles";
+import Highcharts from "highcharts";
+import { ITransitionResponse } from "../../interfacers/storage";
+import { getTime } from "date-fns";
 
-export const Graphic: React.FC = () => (
-	<Container className="bg-content3">
-		<Header>
-			<Title className="text-content2">Entrada de clientes - Dezembro</Title>
-		</Header>
-		<ContainerChart>
-			<ChartClients
-				viewDate="Month"
-				series={[{ name: "Total de clientes", data: clientsData }]}
-			/>
-		</ContainerChart>
-	</Container>
-);
+interface IGraphic {
+	data: ITransitionResponse[];
+}
+
+export const Graphic: React.FC<IGraphic> = ({ data }) => {
+	const time = new Highcharts.Time();
+
+	return (
+		<Container className="bg-content3">
+			<Header>
+				<Title className="text-content2">Histórico De Transações</Title>
+			</Header>
+			<ContainerChart>
+				<ChartClients
+					viewDate="Month"
+					series={[
+						{
+							name: "Transações",
+							data: data.length
+								? data.map((transaction) => [
+										time.dateFormat(
+											"%d/%m/%Y %H:%M:%S",
+											getTime(new Date(transaction.transaction_date)) as number,
+										),
+										Number(transaction.transfer_quantity),
+								  ])
+								: [[]],
+						},
+					]}
+				/>
+			</ContainerChart>
+		</Container>
+	);
+};

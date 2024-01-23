@@ -2,11 +2,9 @@ import { RouteObject } from "react-router-dom";
 import { ProtectedPage } from "../../components";
 
 import { Brands } from "./Brands";
-import { Account } from "./Account";
 import { Storages } from "./Storage";
 import { InitialPage } from "./InitialPage";
 import { StoreDetail } from "./StoreDetail";
-import { DeleteAccount } from "./DeleteAccount";
 import { StorageProvider } from "../../providers/Storage";
 import { StorageDetailProvider } from "../../providers/StorageDetail";
 
@@ -44,15 +42,5 @@ export const ROUTES_PAGES: RouteObject[] = [
 				validadePage={true}
 			/>
 		),
-	},
-	{
-		path: "/account",
-		element: <ProtectedPage element={Account} validadePage={true} />,
-		children: [
-			{
-				path: "delete-account",
-				element: <DeleteAccount />,
-			},
-		],
 	},
 ];

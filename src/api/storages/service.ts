@@ -8,6 +8,7 @@ import {
 	IGetOneResponse,
 	IDashboardRequest,
 	IDashboardResponse,
+	ITransitionResponse,
 } from "../../interfacers/storage";
 import { StorageAbstraction } from "./abstraction";
 
@@ -36,5 +37,11 @@ export class StorageService implements StorageAbstraction {
 
 	public dashboard(payload: IDashboardRequest): Promise<IDashboardResponse> {
 		return this.repo.dashboard(payload);
+	}
+
+	public transactionHistoric(
+		payload: IDashboardRequest,
+	): Promise<ITransitionResponse[]> {
+		return this.repo.transactionHistoric(payload);
 	}
 }

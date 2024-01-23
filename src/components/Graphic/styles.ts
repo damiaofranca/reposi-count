@@ -6,14 +6,10 @@ export const Container = styled.div`
 	min-height: 672px;
 	border-radius: 12px;
 	flex-direction: column;
-	width: calc(75% - 24px);
+	margin-bottom: 24px;
 
 	@media screen and (max-width: 1840px) {
 		padding: 24px;
-	}
-
-	@media screen and (max-width: 1280px) {
-		width: 100%;
 	}
 `;
 
