@@ -18,12 +18,11 @@ import {
 	StoragesTable,
 } from "../../../components";
 
-import { useAuth } from "../../../hooks";
-import { formatField } from "../../../utils/formats";
-import plusIcon from "../../../assets/icons/plus.svg";
-import { useStorage } from "../../../hooks/useStorage";
+import { formatField } from "@utils/formats";
+import plusIcon from "@assets/icons/plus.svg";
+import { useAuth, useStorage } from "@hooks/index";
+import { FilterChangeIcon } from "@assets/icons/FilterChange";
 import { AddStorageBtn, Container, ContainerHeader } from "./styles";
-import { FilterChangeIcon } from "../../../assets/icons/FilterChange";
 
 interface IStorages {}
 

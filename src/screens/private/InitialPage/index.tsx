@@ -1,14 +1,19 @@
-import { useDashboardData } from "../../../api/storages";
-import { FilterChangeIcon } from "../../../assets/icons/FilterChange";
+import { Button, Spinner } from "@nextui-org/react";
+import { StyleSheetManager } from "styled-components";
+
+import { FilterChangeIcon } from "@assets/icons/FilterChange";
+import { useDashboardData, useTransactionHistoric } from "@api/storages";
+
 import {
 	Title,
+	Graphic,
 	CardDashboard,
 	RecentOutputs,
 	RankingTopFive,
 	QuantityByBrands,
-	Graphic,
 	ItemsWithLowStock,
-} from "../../../components";
+} from "@components/index";
+
 import {
 	Center,
 	Container,
@@ -16,9 +21,6 @@ import {
 	ContainerHeader,
 	WrapperGraphics,
 } from "./styles";
-import { Button, Spinner } from "@nextui-org/react";
-import { StyleSheetManager } from "styled-components";
-import { useTransactionHistoric } from "../../../api/storages/hooks/TransactionHistoric";
 
 export interface InitialPageProps {}
 

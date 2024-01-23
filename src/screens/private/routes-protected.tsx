@@ -1,12 +1,8 @@
 import { RouteObject } from "react-router-dom";
-import { ProtectedPage } from "../../components";
 
-import { Brands } from "./Brands";
-import { Storages } from "./Storage";
-import { InitialPage } from "./InitialPage";
-import { StoreDetail } from "./StoreDetail";
-import { StorageProvider } from "../../providers/Storage";
-import { StorageDetailProvider } from "../../providers/StorageDetail";
+import { ProtectedPage } from "@components/index";
+import { Brands, Storages, InitialPage, StoreDetail } from "./index";
+import { StorageProvider, StorageDetailProvider } from "@providers/index";
 
 export const ROUTES_PAGES: RouteObject[] = [
 	{

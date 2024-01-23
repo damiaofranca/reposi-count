@@ -3,3 +3,4 @@ export * from "./GetAll";
 export * from "./GetOne";
 export * from "./Delete";
 export * from "./GetDashboard";
+export * from "./TransactionHistoric";

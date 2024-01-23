@@ -1,11 +1,6 @@
 /* eslint-disable no-useless-escape */
 import * as Yup from "yup";
-
-export const isValidCnpj = (cnpj: string) => {
-	const cnpjRegex = /^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/;
-
-	return cnpjRegex.test(cnpj);
-};
+import { isValidCnpj } from "@/utils/cnpj";
 
 const RegisterBrandSchema = Yup.object().shape({
 	name: Yup.string()

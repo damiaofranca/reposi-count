@@ -1,30 +1,28 @@
 import React, { FC } from "react";
 import { Button, Input, Pagination, Spinner } from "@nextui-org/react";
 
+import { formatCNPJ } from "@utils/cnpj";
+import { isValidCnpj } from "@utils/cnpj";
+import { Meta } from "@interfacers/common";
+import { IBrand } from "@interfacers/brand";
+import plusIcon from "@assets/icons/plus.svg";
+import { useDelayQuery, useAuth } from "@hooks/index";
+import { FilterChangeIcon } from "@assets/icons/FilterChange";
+
 import {
 	Title,
 	AddBrand,
+	EditBrand,
 	BrandsTable,
 	RegisterIcon,
-	EditBrand,
-} from "../../../components";
+} from "@components/index";
 
-import { formatCNPJ } from "../../../utils/cnpj";
-import plusIcon from "../../../assets/icons/plus.svg";
-import { Meta } from "../../../interfacers/common/iBaseList";
-import { useDelayQuery } from "../../../hooks/useDelayQuery";
-import { isValidCnpj } from "../../../components/AddBrand/schema";
 import { AddBrandBtn, Container, ContainerHeader } from "./styles";
-import { FilterChangeIcon } from "../../../assets/icons/FilterChange";
-import { IBrand } from "../../../interfacers/brand";
-import { useAuth } from "../../../hooks";
 
 interface IBrands {}
 
 export const Brands: FC<IBrands> = () => {
 	const { profile_data } = useAuth();
-	const [showModalAddBrand, setShowModalAddBrand] =
-		React.useState<boolean>(false);
 	const [search, setSearch] = React.useState<string>("");
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const [searchInput, setSearchInput] = React.useState<string>("");
@@ -37,6 +35,8 @@ export const Brands: FC<IBrands> = () => {
 	const [brandToEdit, setBrandToEdit] = React.useState<IBrand | undefined>(
 		undefined,
 	);
+	const [showModalAddBrand, setShowModalAddBrand] =
+		React.useState<boolean>(false);
 
 	const onShowBrandModal = () => setShowModalAddBrand(true);
 

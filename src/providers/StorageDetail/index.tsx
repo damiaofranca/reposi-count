@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useParams } from "react-router-dom";
 import { FC, ReactNode, createContext, useState } from "react";
 
+import { validDate } from "@utils/regexs";
 import { IStorageDetailContext } from "./types";
-import { useDelayQuery } from "../../hooks/useDelayQuery";
-import { Meta } from "../../interfacers/common/iBaseList";
-import { validDate } from "../../utils/regexs";
-import { useParams } from "react-router-dom";
-import { useGetOneStorage } from "../../api/storages";
-import { IFilteredParams } from "../../interfacers/product/request/IGetAll";
+import { useGetOneStorage } from "@api/storages";
+import { Meta } from "@interfacers/common/index";
+import { useDelayQuery } from "@hooks/useDelayQuery";
+import { IFilteredParams } from "@interfacers/product/index";
+
 export const StorageDetailContext = createContext({} as IStorageDetailContext);
 
 export const StorageDetailProvider: FC<{ children: ReactNode }> = ({

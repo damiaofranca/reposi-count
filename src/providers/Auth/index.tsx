@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { FC, ReactNode, createContext, useState } from "react";
-
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
+import { FC, ReactNode, createContext, useState } from "react";
+
+import api from "@api/index";
 import { IAuthContext, IUser } from "./types";
-import { ILoginRequest, ILoginResponse } from "../../interfacers/auth/ILogin";
-import api from "../../api";
-import { encryptToken, removeToken } from "../../utils/script";
+import { encryptToken, removeToken } from "@utils/script";
+import { ILoginRequest, ILoginResponse } from "@interfacers/auth/ILogin";
 
 export const AuthContext = createContext({} as IAuthContext);
 

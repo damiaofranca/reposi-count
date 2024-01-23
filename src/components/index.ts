@@ -18,6 +18,7 @@ export * from "./ProtectedPage";
 export * from "./CardDashboard";
 export * from "./RecentOutputs";
 export * from "./RankingTopFive";
+export * from "./ProductsTable";
 export * from "./WatchDimentions";
 export * from "./TransferProduct";
 export * from "./QuantityByBrands";

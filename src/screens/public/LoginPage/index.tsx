@@ -4,11 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { Button, Spinner } from "@nextui-org/react";
 
 import LoginUserSchema from "./schema";
-import { useTheme } from "../../../hooks";
+import { InputNew } from "@components/index";
+import { useAuth, useTheme } from "@hooks/index";
 import LogoIcon from "../../../assets/icons/logo.svg";
-import { useAuth } from "../../../hooks/useAuth";
-import { InputNew } from "../../../components";
-import LogoWhiteIcon from "../../../assets/icons/logo-white.svg";
+import LogoWhiteIcon from "@assets/icons/logo-white.svg";
 
 import {
 	Logo,
@@ -17,16 +16,16 @@ import {
 	TitleForm,
 	Container,
 	ContainerForm,
+	ContainerLogo,
 	ForgotPassword,
 	ContainerSubmit,
+	ContainerCenter,
 	DontHaveAccount,
 	ForgotPasswordContainer,
 	DontHaveAccountContainer,
-	ContainerCenter,
-	ContainerLogo,
 } from "./styles";
 
-const LoginPage: React.FC = () => {
+export const LoginPage: React.FC = () => {
 	const navigate = useNavigate();
 	const { theme } = useTheme();
 	const { onSignIn } = useAuth();
@@ -135,5 +134,3 @@ const LoginPage: React.FC = () => {
 		</Container>
 	);
 };
-
-export default LoginPage;

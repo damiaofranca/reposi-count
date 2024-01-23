@@ -1,5 +1,5 @@
-import { FC, Key, memo, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { FC, Key, memo, useMemo, useRef, useState } from "react";
 import {
 	Input,
 	Button,
@@ -20,15 +20,18 @@ import {
 	ContainerHeader,
 } from "./styles";
 
-import { formatField } from "../../../utils/formats";
-import plusIcon from "../../../assets/icons/plus.svg";
 import {
-	IRefProductsTable,
+	Title,
+	AddProduct,
+	RegisterIcon,
 	ProductsTable,
-} from "../../../components/ProductsTable";
-import { useStorageDetail } from "../../../hooks/useStorageDetail";
-import { AddProduct, RegisterIcon, Title } from "../../../components";
-import { FilterChangeIcon } from "../../../assets/icons/FilterChange";
+	IRefProductsTable,
+} from "@components/index";
+
+import { formatField } from "@utils/formats";
+import plusIcon from "@assets/icons/plus.svg";
+import { useStorageDetail } from "@hooks/useStorageDetail";
+import { FilterChangeIcon } from "@assets/icons/FilterChange";
 
 interface IStoreDetail {}
 

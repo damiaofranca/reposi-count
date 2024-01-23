@@ -1,7 +1,7 @@
 import React, { ReactNode, useState } from "react";
 
 import { IThemeContext } from "./types";
-import { injectInitialTheme } from "../../utils/injectInitialTheme";
+import { injectInitialTheme } from "@utils/injectInitialTheme";
 
 interface UserAuthProps {
 	children: ReactNode;

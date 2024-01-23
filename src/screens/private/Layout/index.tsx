@@ -1,10 +1,10 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import { Header } from "../../../components";
+import { Header } from "@components/Header";
 
 import { Container, ContainerMain, Main } from "./styles";
 
-const Layout: React.FC = () => {
+export const Layout: React.FC = () => {
 	return (
 		<Container>
 			<Header />
@@ -16,5 +16,3 @@ const Layout: React.FC = () => {
 		</Container>
 	);
 };
-
-export default Layout;

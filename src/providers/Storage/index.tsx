@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ChangeEvent, FC, ReactNode, createContext, useState } from "react";
 
-import { cep } from "../../utils/regexs";
+import { cep } from "@utils/regexs";
 import { IStorageContext } from "./types";
-import { IStorage } from "../../interfacers/storage";
-import { Meta } from "../../interfacers/common/iBaseList";
-import { useDelayQuery } from "../../hooks/useDelayQuery";
-import { IFilteredParams } from "../../interfacers/storage";
+import { IStorage } from "@interfacers/storage";
+import { Meta } from "@interfacers/common/iBaseList";
+import { useDelayQuery } from "@hooks/useDelayQuery";
+import { IFilteredParams } from "@interfacers/storage";
 
 export const StorageContext = createContext({} as IStorageContext);
 
